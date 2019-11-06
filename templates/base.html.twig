@@ -10,14 +10,16 @@
     </head>
     <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-item nav-link active" href="{{ path('cats_list') }}">Listes des chatons</a>
-                <a class="nav-item nav-link" href="{{ path('cats_create') }}">Ajout d'un chaton</a>
+        <div class="container">
+            <a class="navbar-brand" href="{{ path('cats_list') }}">Cats</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link active" href="{{ path('cats_list') }}">Listes des chatons</a>
+                    <a class="nav-item nav-link" href="{{ path('cats_create') }}">Ajout d'un chaton</a>
+                </div>
             </div>
         </div>
     </nav>
@@ -29,38 +31,24 @@
                     <thead>
                     <tr>
                         <th scope="col">ID</th>
-                        <th scope="col">Nom</th>
-                        <th scope="col">Couleur</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Color</th>
                         <th scope="col">Race</th>
                         <th scope="col">Image</th>
-                        <th scope="col">Propriétaire</th>
+                        <th scope="col">Owner</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry the Bird</td>
-                        <td>@twitter</td>
-                        <td>Larry the Bird</td>
-                        <td>@twitter</td>
-                        <td>@twitter</td>
-                    </tr>
+
+                    {% for cat in cats %}
+                        <tr>
+                            <th scope="row">{{ cat.id }}</th>
+                            <td>{{ cat.name }}</td>
+                            <td style="background-color: {{ cat.color }}"></td>
+                            <td>{{ cat.race }}</td>
+                            <td>{{ cat.image }}</td>
+                            <td>{{ cat.owner }}</td>
+                        </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>
