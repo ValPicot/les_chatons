@@ -27,6 +27,11 @@
 
     <div class="container">
         {% block body %}
+
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success mt-4">{{ message }}</div>
+            {% endfor %}
+
             <div class="my-5">
                 <table class="table table-hover">
                     <thead>
@@ -49,7 +54,14 @@
                             <td>{{ cat.race }}</td>
                             <td>{{ cat.image }}</td>
                             <td>{{ cat.owner }}</td>
-                            <td><a href="{{ path('cats_edit', {id: cat.id}) }}" class="btn btn-success">Editer</a></td>
+                            <td>
+                                <a href="{{ path('cats_edit', {id: cat.id}) }}" class="btn btn-success">Editer</a>
+                                <form method="post" action="{{ path('cats_delete', {id: cat.id}) }}" style="display: inline-block;" onsubmit="return confirm('Êtes vous vraiment sûr ?')">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ cat.id) }}">
+                                    <button class="btn btn-danger">Supprimer</button>
+                                </form>
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>

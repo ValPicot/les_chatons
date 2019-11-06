@@ -9,6 +9,7 @@ use App\Form\CatType;
 use App\Repository\CatRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -57,6 +58,7 @@ class CatsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->persist($cat);
             $this->em->flush();
+            $this->addFlash('success', 'Chat crée avec succès !');
             return $this->redirectToRoute('cats_list');
         }
 
@@ -66,7 +68,7 @@ class CatsController extends AbstractController
     }
 
     /**
-     * @Route("/edit/{id}", name="edit")
+     * @Route("/edit/{id}", name="edit", methods="GET|POST")
      * @param Cat $cat
      * @param Request $request
      * @return Response
@@ -77,6 +79,7 @@ class CatsController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->flush();
+            $this->addFlash('success', 'Chat modifié avec succès !');
             return $this->redirectToRoute('cats_list');
         }
 
@@ -84,5 +87,21 @@ class CatsController extends AbstractController
             'cat' => $cat,
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/edit/{id}", name="delete", methods="DELETE")
+     * @param Cat $cat
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function delete(Cat $cat, Request $request) {
+        if ($this->isCsrfTokenValid('delete' . $cat->getId(), $request->get('_token'))) {
+            $this->em->remove($cat);
+            $this->em->flush();
+            $this->addFlash('success', 'Chat supprimé avec succès !');
+        }
+
+        return $this->redirectToRoute('cats_list');
     }
 }
