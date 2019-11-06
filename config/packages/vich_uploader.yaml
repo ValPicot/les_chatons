@@ -4,4 +4,4 @@ vich_uploader:
     mappings:
         cat_image:
             uri_prefix: /images/cats
-            upload_destination: '%kernel.project_dir%/public/images/products'
+            upload_destination: '%kernel.project_dir%/public/images/cats'

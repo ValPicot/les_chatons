@@ -3,9 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CatRepository")
+ * @Vich\Uploadable()
  */
 class Cat
 {
@@ -33,6 +36,12 @@ class Cat
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $filename;
+
+    /**
+     * @var File|null
+     * @Vich\UploadableField(mapping="cat_image", fileNameProperty="filename")
      */
     private $image;
 
@@ -70,6 +79,42 @@ class Cat
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getFilename()
+    {
+        return $this->filename;
+    }
+
+    /**
+     * @param mixed $filename
+     * @return Cat
+     */
+    public function setFilename($filename)
+    {
+        $this->filename = $filename;
+        return $this;
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getImage(): ?File
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param File|null $image
+     * @return Cat
+     */
+    public function setImage(?File $image): Cat
+    {
+        $this->image = $image;
+        return $this;
+    }
+
     public function getRace(): ?string
     {
         return $this->race;
@@ -78,18 +123,6 @@ class Cat
     public function setRace(string $race): self
     {
         $this->race = $race;
-
-        return $this;
-    }
-
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
-
-    public function setImage(?string $image): self
-    {
-        $this->image = $image;
 
         return $this;
     }

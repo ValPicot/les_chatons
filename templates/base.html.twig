@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/png" href="{{ asset('/build/images/favicon.png') }}" />
         <title>{% block title %}Les chatons !{% endblock %}</title>
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
@@ -36,6 +37,7 @@
                         <th scope="col">Race</th>
                         <th scope="col">Image</th>
                         <th scope="col">Owner</th>
+                        <th scope="col">Actions</th>
                     </tr>
                     </thead>
 
@@ -47,6 +49,7 @@
                             <td>{{ cat.race }}</td>
                             <td>{{ cat.image }}</td>
                             <td>{{ cat.owner }}</td>
+                            <td><a href="{{ path('cats_edit', {id: cat.id}) }}" class="btn btn-success">Editer</a></td>
                         </tr>
                     {% endfor %}
                     </tbody>

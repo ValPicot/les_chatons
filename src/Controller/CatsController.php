@@ -64,4 +64,25 @@ class CatsController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/edit/{id}", name="edit")
+     * @param Cat $cat
+     * @param Request $request
+     * @return Response
+     */
+    public function edit(Cat $cat, Request $request) {
+        $form = $this->createForm(CatType::class, $cat);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->flush();
+            return $this->redirectToRoute('cats_list');
+        }
+
+        return $this->render('edit.html.twig', [
+            'cat' => $cat,
+            'form' => $form->createView()
+        ]);
+    }
 }
