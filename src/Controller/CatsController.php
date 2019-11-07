@@ -41,7 +41,7 @@ class CatsController extends AbstractController
      */
     public function list() {
         $cats = $this->repository->findAll();
-        return $this->render('base.html.twig', [
+        return $this->render('cats/list.html.twig', [
             'cats' => $cats
         ]);
     }
@@ -63,7 +63,7 @@ class CatsController extends AbstractController
             return $this->redirectToRoute('cats_list');
         }
 
-        return $this->render('create.html.twig', [
+        return $this->render('cats/create.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -84,7 +84,7 @@ class CatsController extends AbstractController
             return $this->redirectToRoute('cats_list');
         }
 
-        return $this->render('edit.html.twig', [
+        return $this->render('cats/edit.html.twig', [
             'cat' => $cat,
             'form' => $form->createView()
         ]);
