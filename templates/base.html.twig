@@ -52,7 +52,11 @@
                             <td>{{ cat.name }}</td>
                             <td style="background-color: {{ cat.color }}"></td>
                             <td>{{ cat.race }}</td>
-                            <td>{{ cat.image }}</td>
+                            <td>
+                                {% if cat.filename %}
+                                    <img src="{{ vich_uploader_asset(cat, 'image') }}" alt="" style="max-width: 100px; height: auto;">
+                                {% endif %}
+                            </td>
                             <td>{{ cat.owner }}</td>
                             <td>
                                 <a href="{{ path('cats_edit', {id: cat.id}) }}" class="btn btn-success">Editer</a>
