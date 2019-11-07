@@ -54,7 +54,9 @@
                             <td>{{ cat.race }}</td>
                             <td>
                                 {% if cat.filename %}
-                                    <img src="{{ vich_uploader_asset(cat, 'image') }}" alt="" style="max-width: 100px; height: auto;">
+                                    <img src="{{ vich_uploader_asset(cat, 'image') | imagine_filter('thumb') }}" alt="">
+                                {% else %}
+                                    <img src="{{ asset('/images/cats/empty.jpg') | imagine_filter('thumb') }}" alt="">
                                 {% endif %}
                             </td>
                             <td>{{ cat.owner }}</td>

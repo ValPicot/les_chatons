@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CatRepository")
@@ -42,6 +43,9 @@ class Cat
 
     /**
      * @var File|null
+     * @Assert\Image(
+     *      mimeTypes="image/jpeg"
+     * )
      * @Vich\UploadableField(mapping="cat_image", fileNameProperty="filename")
      */
     private $image;
@@ -55,6 +59,10 @@ class Cat
      * @ORM\Column(type="datetime")
      */
     private $updated_at;
+
+    public function __construct(){
+        $this->updated_at = new \DateTime();
+    }
 
     public function getId(): ?int
     {
