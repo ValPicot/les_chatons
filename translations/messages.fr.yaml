@@ -1,0 +1,78 @@
+header:
+    navbar:
+        title: 'Chats'
+flash:
+    create:
+        cat:
+            success: 'Chat crée avec succès !'
+    edit:
+        cat:
+            success: 'Chat modifié avec succès !'
+    delete:
+        cat:
+            success: 'Chat supprimé avec succès !'
+form:
+    cat:
+        name: 'Nom'
+        color: 'Couleur'
+        race: 'Race'
+        image: 'Image'
+        owner: 'Propriétaire'
+
+page:
+    cat:
+        list:
+            title: 'Mes chats'
+            btn:
+                create: 'Ajouter'
+                edit: 'Editer'
+                delete: 'Supprimer'
+            table:
+                id: 'ID'
+                name: 'Nom'
+                color: 'Couleur'
+                race: 'Race'
+                image: 'Image'
+                owner: 'Propriétaire'
+                actions: 'Actions'
+        create:
+            title: 'Créer un nouveau chaton'
+            btn: 'Valider'
+        edit:
+            title: 'Editer le chaton'
+            btn: 'Valider les modification'
+
+    user:
+        profile:
+            title: 'User Profile'
+            pro:
+                title: 'Professional Information'
+                titlePro: 'Title'
+                vetRegistration: 'Vet registration'
+                sirenSiretAcn: 'SIREN / SIRET / ACN'
+                vetSchool: 'Vet School'
+                tva: 'VAT / GST'
+                website: 'Website'
+            personal:
+                title: 'Personal information'
+                civility: 'Civility'
+                firstname: 'Firstname'
+                lastname: 'Lastname'
+                email: 'Email address'
+                groundLine: 'Ground Line'
+            security:
+                title: 'Security'
+                password: 'Password'
+            address:
+                title: 'Address'
+                value: 'Address'
+            clinic:
+                title: 'Clinic'
+                logo: 'Logo'
+                name: 'Name'
+                address: 'Address'
+
+admin:
+    roles:
+        ROLE_ADMIN: 'Administrator'
+        ROLE_OWNER_CAT: 'Propriétaire de chat'

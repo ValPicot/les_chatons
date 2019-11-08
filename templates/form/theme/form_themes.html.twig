@@ -1,0 +1,32 @@
+{% extends 'bootstrap_4_layout.html.twig' %}
+
+{% block form_label %}
+    {% spaceless %}
+        {% if label is empty and label is not same as(false) %}
+            {% import _self as macros %}
+            {% set label = ('form.' ~ macros.form_parent_name(form))|replace({' ': ''}) %}
+        {% endif %}
+        {{ parent() }}
+    {% endspaceless %}
+{% endblock form_label %}
+
+{% block checkbox_radio_label -%}
+    {% spaceless %}
+        {% if label is empty %}
+            {% import _self as macros %}
+            {% set label = ('form.' ~ macros.form_parent_name(form))|replace({' ': ''}) %}
+        {% endif %}
+        {{ parent() }}
+    {% endspaceless %}
+{%- endblock checkbox_radio_label %}
+
+{% macro form_parent_name(form) %}
+    {% spaceless %}
+        {% import _self as macros %}
+        {% if form.parent is empty or form.parent.vars.name == "" %}
+            {{ form.vars.name }}
+        {% else %}
+            {{ macros.form_parent_name(form.parent) }}.{{ form.vars.name }}
+        {% endif %}
+    {% endspaceless %}
+{% endmacro %}

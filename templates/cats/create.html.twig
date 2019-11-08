@@ -2,8 +2,8 @@
 
 {% block body %}
 
-    <h1 class="mt-3">Créer un nouveau chaton</h1>
+    <h1 class="mt-3">{{ 'page.cat.create.title' | trans }}</h1>
 
-    {{ include('form/_cat.html.twig', {form: form, button: 'Valider'}) }}
+    {{ include('form/_cat.html.twig', {form: form, button: 'page.cat.create.btn' | trans}) }}
 
 {% endblock %}

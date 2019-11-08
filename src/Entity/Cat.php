@@ -22,6 +22,7 @@ class Cat
     private $id;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="string", length=255)
      */
     private $name;
@@ -32,6 +33,7 @@ class Cat
     private $color;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="string", length=255)
      */
     private $race;
@@ -51,6 +53,7 @@ class Cat
     private $image;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="string", length=255)
      */
     private $owner;
@@ -74,7 +77,7 @@ class Cat
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
 

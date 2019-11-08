@@ -9,7 +9,6 @@ use App\Form\CatType;
 use App\Repository\CatRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,9 +36,8 @@ class CatsController extends AbstractController
 
     /**
      * @Route("/", name="list")
-     * @return Response
      */
-    public function list() {
+    public function list() : Response {
         $cats = $this->repository->findAll();
         return $this->render('cats/list.html.twig', [
             'cats' => $cats
@@ -48,10 +46,8 @@ class CatsController extends AbstractController
 
     /**
      * @Route("/create", name="create")
-     * @param Request $request
-     * @return Response
      */
-    public function create(Request $request) {
+    public function create(Request $request) : Response {
         $cat = new Cat();
         $form = $this->createForm(CatType::class, $cat);
         $form->handleRequest($request);
@@ -59,7 +55,7 @@ class CatsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->persist($cat);
             $this->em->flush();
-            $this->addFlash('success', 'Chat crée avec succès !');
+            $this->addFlash('success', 'flash.create.cat.success');
             return $this->redirectToRoute('cats_list');
         }
 
@@ -70,17 +66,14 @@ class CatsController extends AbstractController
 
     /**
      * @Route("/edit/{id}", name="edit", methods="GET|POST")
-     * @param Cat $cat
-     * @param Request $request
-     * @return Response
      */
-    public function edit(Cat $cat, Request $request) {
+    public function edit(Cat $cat, Request $request) : Response {
         $form = $this->createForm(CatType::class, $cat);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->flush();
-            $this->addFlash('success', 'Chat modifié avec succès !');
+            $this->addFlash('success', 'flash.edit.cat.success');
             return $this->redirectToRoute('cats_list');
         }
 
@@ -100,7 +93,7 @@ class CatsController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $cat->getId(), $request->get('_token'))) {
             $this->em->remove($cat);
             $this->em->flush();
-            $this->addFlash('success', 'Chat supprimé avec succès !');
+            $this->addFlash('success', 'flash.delete.cat.success');
         }
 
         return $this->redirectToRoute('cats_list');

@@ -2,25 +2,27 @@
 
 {% block body %}
 
-    {% for message in app.flashes('success') %}
-        <div class="alert alert-success mt-4">{{ message }}</div>
-    {% endfor %}
-
     <div class="mt-4 text-right">
-        <a href="{{ path('cats_create') }}" class="btn btn-primary">Ajouter</a>
+        <a href="{{ path('cats_create') }}" class="btn btn-primary">
+            {{ 'page.cat.list.btn.create' | trans }}
+        </a>
     </div>
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success mt-4">{{ message | trans }}</div>
+    {% endfor %}
 
     <div class="my-5">
         <table class="table table-hover">
             <thead>
             <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Name</th>
-                <th scope="col">Color</th>
-                <th scope="col">Race</th>
-                <th scope="col">Image</th>
-                <th scope="col">Owner</th>
-                <th scope="col">Actions</th>
+                <th scope="col">{{ 'page.cat.list.table.id' | trans }}</th>
+                <th scope="col">{{ 'page.cat.list.table.name' | trans }}</th>
+                <th scope="col">{{ 'page.cat.list.table.color' | trans }}</th>
+                <th scope="col">{{ 'page.cat.list.table.race' | trans }}</th>
+                <th scope="col">{{ 'page.cat.list.table.image' | trans }}</th>
+                <th scope="col">{{ 'page.cat.list.table.owner' | trans }}</th>
+                <th scope="col">{{ 'page.cat.list.table.actions' | trans }}</th>
             </tr>
             </thead>
 
@@ -39,11 +41,11 @@
                     </td>
                     <td>{{ cat.owner }}</td>
                     <td>
-                        <a href="{{ path('cats_edit', {id: cat.id}) }}" class="btn btn-success">Editer</a>
+                        <a href="{{ path('cats_edit', {id: cat.id}) }}" class="btn btn-success">{{ 'page.cat.list.btn.edit' | trans }}</a>
                         <form method="post" action="{{ path('cats_delete', {id: cat.id}) }}" style="display: inline-block;" onsubmit="return confirm('Êtes vous vraiment sûr ?')">
                             <input type="hidden" name="_method" value="DELETE">
                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ cat.id) }}">
-                            <button class="btn btn-danger">Supprimer</button>
+                            <button class="btn btn-danger">{{ 'page.cat.list.btn.delete' | trans }}</button>
                         </form>
                     </td>
                 </tr>

@@ -2,8 +2,8 @@
 
 {% block body %}
 
-<h1 class="mt-3">Editer le chaton</h1>
+<h1 class="mt-3">{{ 'page.cat.edit.title' | trans }}</h1>
 
-    {{ include('form/_cat.html.twig', {form: form, button: 'Valider les modification'}) }}
+    {{ include('form/_cat.html.twig', {form: form, button: 'page.cat.edit.btn' | trans}) }}
 
 {% endblock %}
