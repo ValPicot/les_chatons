@@ -12,7 +12,14 @@
     <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="{{ path('cats_list') }}">{{ 'header.navbar.title' | trans }}</a>
+            <a class="navbar-brand mr-auto" href="{{ path('cats_list') }}">{{ 'header.navbar.title' | trans }}</a>
+            {% if app.user %}
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a href="{{ path('logout') }}" class="nav-link">Se déconnecter</a>
+                    </li>
+                </ul>
+            {% endif %}
         </div>
     </nav>
 
