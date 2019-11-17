@@ -1,6 +1,7 @@
 header:
     navbar:
         title: 'Chats'
+        users: 'Utilisateurs'
 flash:
     create:
         cat:
@@ -18,6 +19,10 @@ form:
         race: 'Race'
         image: 'Image'
         owner: 'Propriétaire'
+    login:
+        username: "Nom d'utilisateur"
+        password: "Mot de passe"
+        sign_in: "Se connecter"
 
 page:
     cat:
@@ -43,34 +48,13 @@ page:
             btn: 'Valider les modification'
 
     user:
+        list:
+            table:
+                id: 'ID'
+                username: 'Username'
+                actions: 'Actions'
         profile:
-            title: 'User Profile'
-            pro:
-                title: 'Professional Information'
-                titlePro: 'Title'
-                vetRegistration: 'Vet registration'
-                sirenSiretAcn: 'SIREN / SIRET / ACN'
-                vetSchool: 'Vet School'
-                tva: 'VAT / GST'
-                website: 'Website'
-            personal:
-                title: 'Personal information'
-                civility: 'Civility'
-                firstname: 'Firstname'
-                lastname: 'Lastname'
-                email: 'Email address'
-                groundLine: 'Ground Line'
-            security:
-                title: 'Security'
-                password: 'Password'
-            address:
-                title: 'Address'
-                value: 'Address'
-            clinic:
-                title: 'Clinic'
-                logo: 'Logo'
-                name: 'Name'
-                address: 'Address'
+            title: 'Profil'
 
 admin:
     roles:

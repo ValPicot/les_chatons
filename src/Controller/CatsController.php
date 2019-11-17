@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Controller;
-
 
 use App\Entity\Cat;
 use App\Form\CatType;
@@ -13,7 +11,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @Route("/cats", name="cats_")
@@ -23,22 +21,30 @@ class CatsController extends AbstractController
     /**
      * @var CatRepository
      */
-    private $repository;
+    private $catRepository;
     /**
      * @var ObjectManager
      */
     private $em;
 
-    public function __construct(CatRepository $catRepository, ObjectManager $em){
-        $this->repository = $catRepository;
+    private $security;
+
+    public function __construct(CatRepository $catRepository, ObjectManager $em, Security $security){
+        $this->catRepository = $catRepository;
         $this->em = $em;
+        $this->security = $security;
     }
 
     /**
      * @Route("/", name="list")
      */
     public function list() : Response {
-        $cats = $this->repository->findAll();
+        if ($this->security->isGranted('ROLE_ADMIN')){
+            $cats = $this->catRepository->findAll();
+        } else {
+            $cats = $this->catRepository->findBy(array('user' => $this->getUser()));
+        }
+
         return $this->render('cats/list.html.twig', [
             'cats' => $cats
         ]);
@@ -49,6 +55,7 @@ class CatsController extends AbstractController
      */
     public function create(Request $request) : Response {
         $cat = new Cat();
+        $cat->setUser($this->getUser());
         $form = $this->createForm(CatType::class, $cat);
         $form->handleRequest($request);
 
@@ -56,6 +63,7 @@ class CatsController extends AbstractController
             $this->em->persist($cat);
             $this->em->flush();
             $this->addFlash('success', 'flash.create.cat.success');
+
             return $this->redirectToRoute('cats_list');
         }
 
@@ -74,6 +82,7 @@ class CatsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->flush();
             $this->addFlash('success', 'flash.edit.cat.success');
+
             return $this->redirectToRoute('cats_list');
         }
 

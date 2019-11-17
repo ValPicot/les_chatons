@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+{#    <div class="mt-4 text-right">#}
+{#        <a href="{{ path('cats_create') }}" class="btn btn-primary">#}
+{#            {{ 'page.cat.list.btn.create' | trans }}#}
+{#        </a>#}
+{#    </div>#}
+
+{#    {% for message in app.flashes('success') %}#}
+{#        <div class="alert alert-success mt-4">{{ message | trans }}</div>#}
+{#    {% endfor %}#}
+
+    <div class="my-5">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">{{ 'page.user.list.table.id' | trans }}</th>
+                <th scope="col">{{ 'page.user.list.table.username' | trans }}</th>
+                <th scope="col">{{ 'page.cat.list.table.actions' | trans }}</th>
+            </tr>
+            </thead>
+
+            {% for user in users %}
+                <tr>
+                    <th scope="row">{{ user.id }}</th>
+                    <td>{{ user.username }}</td>
+                    <td>
+{#                        <a href="{{ path('cats_edit', {id: cat.id}) }}" class="btn btn-success">{{ 'page.cat.list.btn.edit' | trans }}</a>#}
+{#                        <form method="post" action="{{ path('cats_delete', {id: cat.id}) }}" style="display: inline-block;" onsubmit="return confirm('Êtes vous vraiment sûr ?')">#}
+{#                            <input type="hidden" name="_method" value="DELETE">#}
+{#                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ cat.id) }}">#}
+{#                            <button class="btn btn-danger">{{ 'page.cat.list.btn.delete' | trans }}</button>#}
+{#                        </form>#}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

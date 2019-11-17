@@ -53,18 +53,17 @@ class Cat
     private $image;
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(type="string", length=255)
-     */
-    private $owner;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $updated_at;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="cats")
+     */
+    private $user;
+
     public function __construct(){
-        $this->updated_at = new \DateTime();
+        $this->updated_at = new \DateTime('now');
     }
 
     public function getId(): ?int
@@ -148,18 +147,6 @@ class Cat
         return $this;
     }
 
-    public function getOwner(): ?string
-    {
-        return $this->owner;
-    }
-
-    public function setOwner(string $owner): self
-    {
-        $this->owner = $owner;
-
-        return $this;
-    }
-
     public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updated_at;
@@ -168,6 +155,18 @@ class Cat
     public function setUpdatedAt(\DateTimeInterface $updated_at): self
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

@@ -39,7 +39,7 @@
                             <img src="{{ asset('/images/cats/empty.jpg') | imagine_filter('thumb') }}" alt="">
                         {% endif %}
                     </td>
-                    <td>{{ cat.owner }}</td>
+                    <td>{{ cat.user.username }}</td>
                     <td>
                         <a href="{{ path('cats_edit', {id: cat.id}) }}" class="btn btn-success">{{ 'page.cat.list.btn.edit' | trans }}</a>
                         <form method="post" action="{{ path('cats_delete', {id: cat.id}) }}" style="display: inline-block;" onsubmit="return confirm('Êtes vous vraiment sûr ?')">
