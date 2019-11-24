@@ -6,6 +6,7 @@ use App\Entity\Cat;
 use App\Form\CatType;
 use App\Repository\CatRepository;
 use Doctrine\Common\Persistence\ObjectManager;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -75,13 +76,14 @@ class CatsController extends AbstractController
     /**
      * @Route("/edit/{id}", name="edit", methods="GET|POST")
      */
-    public function edit(Cat $cat, Request $request) : Response {
+    public function edit(Cat $cat, Request $request, LoggerInterface $logger) : Response {
         $form = $this->createForm(CatType::class, $cat);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->flush();
             $this->addFlash('success', 'flash.edit.cat.success');
+            $logger->info('Un chat à été crée ! ');
 
             return $this->redirectToRoute('cats_list');
         }
