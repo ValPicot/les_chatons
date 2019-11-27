@@ -6,6 +6,8 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/annotations": "^1.8",
+        "fzaninotto/faker": "^1.9",
+        "knplabs/knp-paginator-bundle": "^4.1",
         "liip/imagine-bundle": "^2.2",
         "sensio/framework-extra-bundle": "^5.5",
         "symfony/apache-pack": "^1.0",

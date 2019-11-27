@@ -6,6 +6,7 @@ use App\Entity\Cat;
 use App\Form\CatType;
 use App\Repository\CatRepository;
 use Doctrine\Common\Persistence\ObjectManager;
+use Knp\Component\Pager\PaginatorInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -39,11 +40,19 @@ class CatsController extends AbstractController
     /**
      * @Route("/", name="list")
      */
-    public function list() : Response {
+    public function list(PaginatorInterface $paginator, Request $request) : Response {
         if ($this->security->isGranted('ROLE_ADMIN')){
-            $cats = $this->catRepository->findAll();
+            $cats = $paginator->paginate(
+                $this->catRepository->findAllVisibleQuery(),
+                $request->query->getInt('page', 1),
+                15
+            );
         } else {
-            $cats = $this->catRepository->findBy(array('user' => $this->getUser()));
+            $cats = $paginator->paginate(
+                $this->catRepository->findAllVisibleByUserIdQuery($this->getUser()),
+                $request->query->getInt('page', 1),
+                15
+            );
         }
 
         return $this->render('cats/list.html.twig', [

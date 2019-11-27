@@ -108,6 +108,9 @@
             "config/packages/dev/easy_log_handler.yaml"
         ]
     },
+    "fzaninotto/faker": {
+        "version": "v1.9.0"
+    },
     "imagine/imagine": {
         "version": "1.2.2"
     },
@@ -116,6 +119,12 @@
     },
     "jms/metadata": {
         "version": "1.7.0"
+    },
+    "knplabs/knp-components": {
+        "version": "v1.3.10"
+    },
+    "knplabs/knp-paginator-bundle": {
+        "version": "v4.1.0"
     },
     "liip/imagine-bundle": {
         "version": "1.8",
