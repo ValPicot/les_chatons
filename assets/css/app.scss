@@ -1,0 +1,15 @@
+@import "~font-awesome/css/font-awesome.min.css";
+
+header {
+  nav .right-users {
+    .nav-item:not(:last-child) {
+      margin-right: 20px;
+    }
+    i {
+      color: rgba(255, 255, 255, 0.5);
+    }
+    .nav-link {
+      display: inline-block;
+    }
+  }
+}
