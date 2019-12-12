@@ -19,6 +19,16 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+    public function userDisabled() {
+        return $this->createQueryBuilder('u')
+            ->where('u.updatedAt <= :date_end')
+            ->andWhere('u.isActive = true')
+            ->setParameter('date_end', new \DateTime('-5 years'))
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

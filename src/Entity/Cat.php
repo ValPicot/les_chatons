@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Traits\TimetableTraits;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CatRepository")
@@ -14,6 +15,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Cat
 {
+    use TimetableTraits;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -55,7 +58,7 @@ class Cat
     /**
      * @ORM\Column(type="datetime")
      */
-    private $updated_at;
+    //private $updated_at;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="cats")
@@ -63,7 +66,8 @@ class Cat
     private $user;
 
     public function __construct(){
-        $this->updated_at = new \DateTime('now');
+        $this->updatedAt = new \DateTime('now');
+        $this->createdAt = new \DateTime('now');
     }
 
     public function getId(): ?int
@@ -130,7 +134,7 @@ class Cat
     {
         $this->image = $image;
         if ($this->image instanceof UploadedFile) {
-            $this->updated_at = new \DateTime('now');
+            $this->updatedAt = new \DateTime('now');
         }
         return $this;
     }
@@ -147,17 +151,17 @@ class Cat
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updated_at;
-    }
-
-    public function setUpdatedAt(\DateTimeInterface $updated_at): self
-    {
-        $this->updated_at = $updated_at;
-
-        return $this;
-    }
+//    public function getUpdatedAt(): ?\DateTimeInterface
+//    {
+//        return $this->updated_at;
+//    }
+//
+//    public function setUpdatedAt(\DateTimeInterface $updated_at): self
+//    {
+//        $this->updated_at = $updated_at;
+//
+//        return $this;
+//    }
 
     public function getUser(): ?User
     {

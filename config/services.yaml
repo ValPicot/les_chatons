@@ -29,3 +29,7 @@ services:
     App\Listener\ImageCacheSubscriber:
         tags:
         - { name: doctrine.event_subscriber }
+
+    App\Command\UserDisabledCommand:
+        tags:
+            - { name: 'console.command', command: 'user:disabled' }

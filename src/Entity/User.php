@@ -7,12 +7,15 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Traits\TimetableTraits;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
 class User implements UserInterface,\Serializable
 {
+    use TimetableTraits;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -41,6 +44,11 @@ class User implements UserInterface,\Serializable
      * @ORM\OneToMany(targetEntity="App\Entity\Cat", mappedBy="user")
      */
     private $cats;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default" : 1})
+     */
+    private $isActive;
 
     public function __construct()
     {
@@ -188,6 +196,18 @@ class User implements UserInterface,\Serializable
                 $cat->setUserId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIsActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): self
+    {
+        $this->isActive = $isActive;
 
         return $this;
     }

@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Faker\Factory;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserFixtures extends Fixture
@@ -17,16 +18,32 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
+        $faker = Factory::create('fr_FR');
+
         $user = new User();
         $user->setUsername('demo');
         $user->setPassword($this->encoder->encodePassword($user, 'demo'));
         $user->setRoles(['ROLE_ADMIN']);
+        $user->setCreatedAt(new \DateTime('now'));
+        $user->setUpdatedAt(new \DateTime('now'));
         $manager->persist($user);
 
-        $user = new User();
-        $user->setUsername('cat');
-        $user->setPassword($this->encoder->encodePassword($user, 'cat'));
-        $manager->persist($user);
+//        $user = new User();
+//        $user->setUsername('cat');
+//        $user->setPassword($this->encoder->encodePassword($user, 'cat'));
+//        $user->setCreatedAt(new \DateTime('now'));
+//        $user->setUpdatedAt(new \DateTime('now'));
+//        $manager->persist($user);
+
+        for ($i = 0; $i < 50; $i++) {
+            $setCreated = $faker->dateTimeBetween('-15 years', 'now');
+            $user = new User();
+            $user->setUsername($faker->name);
+            $user->setPassword($this->encoder->encodePassword($user, 'cat'));
+            $user->setCreatedAt($setCreated);
+            $user->setUpdatedAt($faker->dateTimeBetween($setCreated, 'now'));
+            $manager->persist($user);
+        }
 
         $manager->flush();
     }
