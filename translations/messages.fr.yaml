@@ -23,6 +23,11 @@ form:
         username: "Nom d'utilisateur"
         password: "Mot de passe"
         sign_in: "Se connecter"
+    user:
+        username: 'Identifiant'
+        password: 'Mot de passe'
+        roles: 'Rôles'
+        isActive: 'Activer le compte'
 
 page:
     cat:
@@ -46,15 +51,19 @@ page:
         edit:
             title: 'Editer le chaton'
             btn: 'Valider les modification'
-
     user:
         list:
+            btn:
+                create: 'Ajouter'
             table:
                 id: 'ID'
                 username: 'Username'
                 actions: 'Actions'
         profile:
             title: 'Profil'
+        create:
+            title: 'Créer un nouvel utilisateur'
+            btn: 'Valider'
 
 admin:
     roles:

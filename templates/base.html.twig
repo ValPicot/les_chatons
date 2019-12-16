@@ -24,7 +24,7 @@
                 {% if app.user %}
                     <ul class="navbar-nav ml-auto right-users">
                         <li class="nav-item">
-                            <i class="fa fa-user-circle-o" aria-hidden="true"></i><a href="#" class="nav-link">{{ app.user.username }}</a>
+                            <i class="fa fa-user-circle-o" aria-hidden="true"></i><a href="{{ path('users_profile') }}" class="nav-link">{{ app.user.username }}</a>
                         </li>
                         <li class="nav-item">
                             <i class="fa fa-sign-out" aria-hidden="true"></i><a href="{{ path('logout') }}" class="nav-link">Se déconnecter</a>

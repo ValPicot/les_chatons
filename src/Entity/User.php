@@ -53,6 +53,7 @@ class User implements UserInterface,\Serializable
     public function __construct()
     {
         $this->cats = new ArrayCollection();
+        $this->isActive = 1;
     }
 
     public function getId(): ?int
