@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Cat;
 use App\Entity\User;
 use App\Form\CatType;
+use App\Form\ProfileType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -67,6 +68,28 @@ class UsersController extends AbstractController
         }
         return $this->render('users/create.html.twig', [
             'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/edit", name="edit")
+     */
+    public function edit(Request $request) {
+        $user = $this->getUser();
+
+        $form = $this->createForm(ProfileType::class, null, ['user' => $user]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->flush();
+            $this->addFlash('success', 'flash.edit.user.success');
+
+            return $this->redirectToRoute('users_profile');
+        }
+
+
+        return $this->render('users/edit.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 }

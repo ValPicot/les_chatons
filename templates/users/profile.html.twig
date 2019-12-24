@@ -2,15 +2,15 @@
 
 {% block body %}
 
-    {#    <div class="mt-4 text-right">#}
-    {#        <a href="{{ path('cats_create') }}" class="btn btn-primary">#}
-    {#            {{ 'page.cat.list.btn.create' | trans }}#}
-    {#        </a>#}
-    {#    </div>#}
+        <div class="mt-4 text-right">
+            <a href="{{ path('users_edit') }}" class="btn btn-primary">
+                {{ 'page.user.list.btn.edit' | trans }}
+            </a>
+        </div>
 
-    {#    {% for message in app.flashes('success') %}#}
-    {#        <div class="alert alert-success mt-4">{{ message | trans }}</div>#}
-    {#    {% endfor %}#}
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success mt-4">{{ message | trans }}</div>
+        {% endfor %}
 
     <div class="my-5">
         <h1>{{ 'page.user.profile.title' | trans }}</h1>

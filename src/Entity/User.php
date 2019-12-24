@@ -46,6 +46,7 @@ class User implements UserInterface,\Serializable
 
     /**
      * @Assert\NotBlank()
+     * @Assert\Email()
      * @ORM\Column(type="string", length=255)
      */
     private $email;

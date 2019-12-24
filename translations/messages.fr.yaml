@@ -9,6 +9,8 @@ flash:
     edit:
         cat:
             success: 'Chat modifié avec succès !'
+        user:
+            success: 'Utilisateur modifié avec succès !'
     delete:
         cat:
             success: 'Chat supprimé avec succès !'
@@ -28,6 +30,16 @@ form:
         password: 'Mot de passe'
         roles: 'Rôles'
         isActive: 'Activer le compte'
+    profile:
+        name: 'Prenom'
+        lastname: 'Nom'
+        email: 'Email'
+        currentPassword: 'Ancien mot de passe'
+        roles: 'Rôles'
+        isActive: 'Activer le compte'
+        password:
+            first: 'Nouveau mot de passe'
+            second: 'Répéter le nouveau mot de passe'
 
 page:
     cat:
@@ -55,6 +67,7 @@ page:
         list:
             btn:
                 create: 'Ajouter'
+                edit: 'Éditer'
             table:
                 id: 'ID'
                 username: 'Username'
@@ -64,6 +77,8 @@ page:
         create:
             title: 'Créer un nouvel utilisateur'
             btn: 'Valider'
+        edit:
+            title: 'Éditer le profil'
 
 admin:
     roles:
