@@ -21,7 +21,10 @@ class UserFixtures extends Fixture
         $faker = Factory::create('fr_FR');
 
         $user = new User();
-        $user->setUsername('demo');
+        //$user->setUsername('demo');
+        $user->setEmail('admin@ylly.fr');
+        $user->setName('Name');
+        $user->setLastname('Lastname');
         $user->setPassword($this->encoder->encodePassword($user, 'demo'));
         $user->setRoles(['ROLE_ADMIN']);
         $user->setCreatedAt(new \DateTime('now'));
@@ -38,7 +41,10 @@ class UserFixtures extends Fixture
         for ($i = 0; $i < 50; $i++) {
             $setCreated = $faker->dateTimeBetween('-15 years', 'now');
             $user = new User();
-            $user->setUsername($faker->name);
+            //$user->setUsername($faker->name);
+            $user->setEmail($faker->email);
+            $user->setName($faker->name);
+            $user->setLastname($faker->lastName);
             $user->setPassword($this->encoder->encodePassword($user, 'cat'));
             $user->setCreatedAt($setCreated);
             $user->setUpdatedAt($faker->dateTimeBetween($setCreated, 'now'));

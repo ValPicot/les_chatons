@@ -20,7 +20,7 @@ form:
         image: 'Image'
         owner: 'Propriétaire'
     login:
-        username: "Nom d'utilisateur"
+        username: "Email"
         password: "Mot de passe"
         sign_in: "Se connecter"
     user:
