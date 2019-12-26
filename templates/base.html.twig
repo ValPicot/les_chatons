@@ -27,7 +27,16 @@
                             <i class="fa fa-user-circle-o" aria-hidden="true"></i><a href="{{ path('users_profile') }}" class="nav-link">{{ app.user.name }} {{ app.user.lastname }}</a>
                         </li>
                         <li class="nav-item">
-                            <i class="fa fa-sign-out" aria-hidden="true"></i><a href="{{ path('logout') }}" class="nav-link">Se déconnecter</a>
+                            <i class="fa fa-sign-out" aria-hidden="true"></i><a href="{{ path('logout') }}" class="nav-link">{{ 'header.navbar.logout' | trans }}</a>
+                        </li>
+                    </ul>
+                {% else %}
+                    <ul class="navbar-nav ml-auto right-users">
+                        <li class="nav-item">
+                            <i class="fa fa-user-plus" aria-hidden="true"></i><a href="{{ path('registration') }}" class="nav-link">{{ 'header.navbar.create' | trans }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <i class="fa fa-sign-in" aria-hidden="true"></i><a href="{{ path('login') }}" class="nav-link">{{ 'header.navbar.login' | trans }}</a>
                         </li>
                     </ul>
                 {% endif %}

@@ -2,6 +2,9 @@ header:
     navbar:
         title: 'Chats'
         users: 'Utilisateurs'
+        logout: 'Se déconnecter'
+        login: 'Se connecter'
+        create: 'Créer un compte'
 flash:
     create:
         cat:
@@ -81,6 +84,8 @@ page:
             btn: 'Valider'
         edit:
             title: 'Éditer le profil'
+        registration:
+            title: "S'inscrire"
 
 admin:
     roles:
