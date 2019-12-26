@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Cat;
-use App\Form\CatType;
+use App\Form\Type\CatType;
 use App\Repository\CatRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Knp\Component\Pager\PaginatorInterface;
