@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Traits\TimetableTraits;
+use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -24,7 +25,7 @@ class User implements UserInterface,\Serializable
     private $id;
 
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"registration"})
      * @ORM\Column(type="string", length=255)
      */
     private $password;
@@ -62,6 +63,13 @@ class User implements UserInterface,\Serializable
      * @ORM\Column(type="string", length=255)
      */
     private $lastname;
+
+    /**
+     * @SecurityAssert\UserPassword(
+     *     message = "Votre ancien mot de passe n'est pas bon !", groups={"user_edit"}
+     * )
+     */
+    protected $oldPassword;
 
     public function __construct()
     {
@@ -252,6 +260,24 @@ class User implements UserInterface,\Serializable
     {
         $this->lastname = $lastname;
 
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOldPassword()
+    {
+        return $this->oldPassword;
+    }
+
+    /**
+     * @param mixed $oldPassword
+     * @return User
+     */
+    public function setOldPassword($oldPassword)
+    {
+        $this->oldPassword = $oldPassword;
         return $this;
     }
 }

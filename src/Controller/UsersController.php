@@ -77,7 +77,7 @@ class UsersController extends AbstractController
     public function edit(Request $request) {
         $user = $this->getUser();
 
-        $form = $this->createForm(ProfileType::class, null, ['user' => $user]);
+        $form = $this->createForm(ProfileType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

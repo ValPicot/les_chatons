@@ -39,7 +39,7 @@ form:
         name: 'Prenom'
         lastname: 'Nom'
         email: 'Email'
-        currentPassword: 'Ancien mot de passe'
+        oldPassword: 'Ancien mot de passe'
         roles: 'Rôles'
         isActive: 'Activer le compte'
         password:
