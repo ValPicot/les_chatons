@@ -2,14 +2,14 @@
 
 {% block body %}
 
-    {% for message in app.flashes('success') %}
-        <div class="alert alert-success mt-4">{{ message | trans }}</div>
-    {% endfor %}
+{#    {% for message in app.flashes('success') %}#}
+{#        <div class="alert alert-success mt-4">{{ message | trans }}</div>#}
+{#    {% endfor %}#}
 
     <div class="my-5">
         <h1>{{ 'page.user.registration.title' | trans }}</h1>
 
-
+        {{ include('form/_user.html.twig', {form: form, button: 'page.user.create.btn' | trans}) }}
     </div>
 
 {% endblock %}

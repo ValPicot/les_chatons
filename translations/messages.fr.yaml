@@ -29,14 +29,21 @@ form:
         password: "Mot de passe"
         sign_in: "Se connecter"
     user:
-        name: 'Prenom'
+        name: 'Prénom'
         lastname: 'Nom'
         email: 'Email'
         password: 'Mot de passe'
         roles: 'Rôles'
         isActive: 'Activer le compte'
+    registration:
+        name: 'Prénom'
+        lastname: 'Nom'
+        email: 'Email'
+        password:
+          first: 'Mot de passe'
+          second: 'Répéter le mot de passe'
     profile:
-        name: 'Prenom'
+        name: 'Prénom'
         lastname: 'Nom'
         email: 'Email'
         oldPassword: 'Ancien mot de passe'

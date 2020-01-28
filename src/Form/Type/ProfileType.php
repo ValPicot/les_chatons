@@ -20,17 +20,17 @@ class ProfileType extends AbstractType
             ->add('name', TextType::class)
             ->add('lastname', TextType::class)
             ->add('email', EmailType::class)
-            ->add('oldPassword', PasswordType::class, [
-                'required' => false
-            ])
-            ->add('newPassword', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'required' => false,
-                'mapped' => false,
-                'first_options' => ['label' => 'form.profile.password.first'],
-                'second_options' => ['label' => 'form.profile.password.second'],
-                'invalid_message' => 'form.error.password.repeated'
-            ])
+//            ->add('oldPassword', PasswordType::class, [
+//                'required' => false
+//            ])
+//            ->add('newPassword', RepeatedType::class, [
+//                'type' => PasswordType::class,
+//                'required' => false,
+//                'mapped' => false,
+//                'first_options' => ['label' => 'form.profile.password.first'],
+//                'second_options' => ['label' => 'form.profile.password.second'],
+//                'invalid_message' => 'form.error.password.repeated'
+//            ])
         ;
     }
 
