@@ -17,6 +17,11 @@ flash:
     delete:
         cat:
             success: 'Chat supprimé avec succès !'
+
+entity:
+  user:
+    unique: 'existe déjà !'
+
 form:
     cat:
         name: 'Nom'

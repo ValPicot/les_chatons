@@ -1,0 +1,3 @@
+entity:
+  user:
+    unique: '{{ value }} existe déjà !'
