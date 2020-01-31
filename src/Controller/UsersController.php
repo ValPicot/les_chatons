@@ -2,9 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Cat;
 use App\Entity\User;
-use App\Form\Type\CatType;
 use App\Form\Type\ProfileType;
 use App\Form\Type\UserType;
 use App\Repository\UserRepository;
@@ -24,7 +22,8 @@ class UsersController extends AbstractController
 
     private $em;
 
-    public function __construct(UserRepository $userRepository, ObjectManager $em){
+    public function __construct(UserRepository $userRepository, ObjectManager $em)
+    {
         $this->userRepository = $userRepository;
         $this->em = $em;
     }
@@ -33,20 +32,22 @@ class UsersController extends AbstractController
      * @Route("/list", name="list")
      * @IsGranted({"ROLE_ADMIN"})
      */
-    public function list() {
+    public function list()
+    {
         $users = $this->userRepository->findAll();
 
         return $this->render('users/list.html.twig', [
-            'users' => $users
+            'users' => $users,
         ]);
     }
 
     /**
      * @Route("/profile", name="profile")
      */
-    public function profile() {
+    public function profile()
+    {
         return $this->render('users/profile.html.twig', [
-            'user' => $this->getUser()
+            'user' => $this->getUser(),
         ]);
     }
 
@@ -54,7 +55,8 @@ class UsersController extends AbstractController
      * @Route("/create", name="create")
      * @IsGranted({"ROLE_ADMIN"})
      */
-    public function create(Request $request) : Response {
+    public function create(Request $request): Response
+    {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -66,15 +68,17 @@ class UsersController extends AbstractController
 
             return $this->redirectToRoute('users_list');
         }
+
         return $this->render('users/create.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
     /**
      * @Route("/edit", name="edit")
      */
-    public function edit(Request $request) {
+    public function edit(Request $request)
+    {
         $user = $this->getUser();
 
         $form = $this->createForm(ProfileType::class, $user);
@@ -86,7 +90,6 @@ class UsersController extends AbstractController
 
             return $this->redirectToRoute('users_profile');
         }
-
 
         return $this->render('users/edit.html.twig', [
             'form' => $form->createView(),

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Security;
 
 use App\Entity\User;
@@ -10,9 +9,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserChecker implements UserCheckerInterface
 {
-
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function checkPreAuth(UserInterface $user)
     {
@@ -27,7 +25,7 @@ class UserChecker implements UserCheckerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function checkPostAuth(UserInterface $user)
     {

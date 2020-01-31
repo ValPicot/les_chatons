@@ -13,7 +13,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProfileType extends AbstractType
 {
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -21,7 +20,7 @@ class ProfileType extends AbstractType
             ->add('lastname', TextType::class)
             ->add('email', EmailType::class)
 //            ->add('oldPassword', PasswordType::class, [
-//                'required' => false
+//                'required' => false,
 //            ])
 //            ->add('newPassword', RepeatedType::class, [
 //                'type' => PasswordType::class,
@@ -29,7 +28,7 @@ class ProfileType extends AbstractType
 //                'mapped' => false,
 //                'first_options' => ['label' => 'form.profile.password.first'],
 //                'second_options' => ['label' => 'form.profile.password.second'],
-//                'invalid_message' => 'form.error.password.repeated'
+//                'invalid_message' => 'form.error.password.repeated',
 //            ])
         ;
     }
@@ -38,7 +37,7 @@ class ProfileType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
-            'validation_groups' => ['Default','user_edit']
+            'validation_groups' => ['Default', 'user_edit'],
         ]);
     }
 }

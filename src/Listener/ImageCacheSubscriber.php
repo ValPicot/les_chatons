@@ -21,19 +21,22 @@ class ImageCacheSubscriber implements EventSubscriber {
      */
     private $uploaderHelper;
 
-    public function __construct(CacheManager $cacheManager, UploaderHelper $uploaderHelper){
+    public function __construct(CacheManager $cacheManager, UploaderHelper $uploaderHelper)
+    {
         $this->cacheManager = $cacheManager;
         $this->uploaderHelper = $uploaderHelper;
     }
 
-    public function getSubscribedEvents(){
+    public function getSubscribedEvents()
+    {
         return [
             'preRemove',
-            'preUpdate'
+            'preUpdate',
         ];
     }
 
-    public function preRemove(LifecycleEventArgs $args) {
+    public function preRemove(LifecycleEventArgs $args)
+    {
         $entity = $args->getEntity();
         if (!$entity instanceof Cat) {
             return;
@@ -41,7 +44,8 @@ class ImageCacheSubscriber implements EventSubscriber {
         $this->cacheManager->remove($this->uploaderHelper->asset($entity, 'image'));
     }
 
-    public function preUpdate(PreUpdateEventArgs $args) {
+    public function preUpdate(PreUpdateEventArgs $args)
+    {
         $entity = $args->getEntity();
         if (!$entity instanceof Cat) {
             return;

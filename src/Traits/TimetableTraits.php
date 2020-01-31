@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Traits;
-
 
 trait TimetableTraits
 {
@@ -26,11 +24,13 @@ trait TimetableTraits
 
     /**
      * @param mixed $createdAt
+     *
      * @return TimetableTraits
      */
     public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
+
         return $this;
     }
 
@@ -44,11 +44,13 @@ trait TimetableTraits
 
     /**
      * @param mixed $updatedAt
+     *
      * @return TimetableTraits
      */
     public function setUpdatedAt(\DateTime $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
         return $this;
     }
 }

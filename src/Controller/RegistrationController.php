@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Controller;
 
 use App\Entity\User;
@@ -20,7 +19,8 @@ class RegistrationController extends AbstractController
     private $userRepository;
     private $mailerService;
 
-    public function __construct(ObjectManager $em, UserPasswordEncoderInterface $encoder, UserRepository $userRepository, MailerService $mailerService){
+    public function __construct(ObjectManager $em, UserPasswordEncoderInterface $encoder, UserRepository $userRepository, MailerService $mailerService)
+    {
         $this->em = $em;
         $this->encoder = $encoder;
         $this->userRepository = $userRepository;
@@ -30,8 +30,9 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/registration", name="registration")
      */
-    public function registration(Request $request) {
-        if ($this->isGranted('IS_AUTHENTICATED_FULLY')){
+    public function registration(Request $request)
+    {
+        if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
             return $this->redirectToRoute('cats_list');
         }
 
@@ -55,8 +56,9 @@ class RegistrationController extends AbstractController
 
             return $this->redirectToRoute('login');
         }
+
         return $this->render('users/registration.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
@@ -65,11 +67,12 @@ class RegistrationController extends AbstractController
      */
     public function activateAccount(string $token)
     {
-        $user = $this->userRepository->findOneBy(array('resetToken' => $token));
-        if ($user){
+        $user = $this->userRepository->findOneBy(['resetToken' => $token]);
+        if ($user) {
             $entityManager = $this->getDoctrine()->getManager();
             $user->setIsActive(1);
             $entityManager->flush();
+
             return $this->redirectToRoute('confirm_email');
         } else {
             return $this->redirectToRoute('registration');

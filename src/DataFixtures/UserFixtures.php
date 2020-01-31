@@ -12,7 +12,8 @@ class UserFixtures extends Fixture
 {
     private $encoder;
 
-    public function __construct(UserPasswordEncoderInterface $encoder){
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
         $this->encoder = $encoder;
     }
 
@@ -31,14 +32,7 @@ class UserFixtures extends Fixture
         $user->setUpdatedAt(new \DateTime('now'));
         $manager->persist($user);
 
-//        $user = new User();
-//        $user->setUsername('cat');
-//        $user->setPassword($this->encoder->encodePassword($user, 'cat'));
-//        $user->setCreatedAt(new \DateTime('now'));
-//        $user->setUpdatedAt(new \DateTime('now'));
-//        $manager->persist($user);
-
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < 50; ++$i) {
             $setCreated = $faker->dateTimeBetween('-15 years', 'now');
             $user = new User();
             //$user->setUsername($faker->name);

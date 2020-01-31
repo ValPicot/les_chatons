@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
+use App\Traits\TimetableTraits;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
-use App\Traits\TimetableTraits;
 use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
  *     message="{{ value }} email already exist !"
  * )
  */
-class User implements UserInterface,\Serializable
+class User implements UserInterface, \Serializable
 {
     use TimetableTraits;
 
@@ -94,7 +94,7 @@ class User implements UserInterface,\Serializable
 
     public function getUsername(): ?string
     {
-        return (string)$this->email;
+        return (string) $this->email;
     }
 
     public function getPassword(): ?string
@@ -128,6 +128,7 @@ class User implements UserInterface,\Serializable
         if (empty($this->roles)) {
             return ['ROLE_OWNER_CAT'];
         }
+
         return $this->roles;
     }
 
@@ -158,13 +159,15 @@ class User implements UserInterface,\Serializable
      */
     public function eraseCredentials()
     {
-
     }
 
     /**
-     * String representation of object
-     * @link https://php.net/manual/en/serializable.serialize.php
+     * String representation of object.
+     *
+     * @see https://php.net/manual/en/serializable.serialize.php
+     *
      * @return string the string representation of the object or null
+     *
      * @since 5.1.0
      */
     public function serialize()
@@ -172,17 +175,21 @@ class User implements UserInterface,\Serializable
         return serialize([
             $this->id,
             $this->email,
-            $this->password
+            $this->password,
         ]);
     }
 
     /**
-     * Constructs the object
-     * @link https://php.net/manual/en/serializable.unserialize.php
+     * Constructs the object.
+     *
+     * @see https://php.net/manual/en/serializable.unserialize.php
+     *
      * @param string $serialized <p>
-     * The string representation of the object.
-     * </p>
+     *                           The string representation of the object.
+     *                           </p>
+     *
      * @return void
+     *
      * @since 5.1.0
      */
     public function unserialize($serialized)
@@ -283,11 +290,13 @@ class User implements UserInterface,\Serializable
 
     /**
      * @param mixed $oldPassword
+     *
      * @return User
      */
     public function setOldPassword($oldPassword)
     {
         $this->oldPassword = $oldPassword;
+
         return $this;
     }
 

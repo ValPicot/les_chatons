@@ -11,8 +11,9 @@ class SecurityController extends AbstractController
     /**
      * @Route("/login", name="login")
      */
-    public function login(AuthenticationUtils $authenticationUtils) : Response {
-        if ($this->isGranted('IS_AUTHENTICATED_FULLY')){
+    public function login(AuthenticationUtils $authenticationUtils): Response
+    {
+        if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
             return $this->redirectToRoute('cats_list');
         }
 
@@ -20,7 +21,7 @@ class SecurityController extends AbstractController
         $lastUsername = $authenticationUtils->getLastUsername();
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
-            'error' => $error
+            'error' => $error,
         ]);
     }
 }

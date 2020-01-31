@@ -18,7 +18,7 @@ class CatType extends AbstractType
             ->add('color', ColorType::class)
             ->add('race')
             ->add('image', FileType::class, [
-                'required' => false
+                'required' => false,
             ])
         ;
     }

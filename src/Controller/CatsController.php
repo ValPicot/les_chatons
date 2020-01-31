@@ -31,7 +31,8 @@ class CatsController extends AbstractController
 
     private $security;
 
-    public function __construct(CatRepository $catRepository, ObjectManager $em, Security $security){
+    public function __construct(CatRepository $catRepository, ObjectManager $em, Security $security)
+    {
         $this->catRepository = $catRepository;
         $this->em = $em;
         $this->security = $security;
@@ -40,8 +41,9 @@ class CatsController extends AbstractController
     /**
      * @Route("/", name="list")
      */
-    public function list(PaginatorInterface $paginator, Request $request) : Response {
-        if ($this->security->isGranted('ROLE_ADMIN')){
+    public function list(PaginatorInterface $paginator, Request $request): Response
+    {
+        if ($this->security->isGranted('ROLE_ADMIN')) {
             $cats = $paginator->paginate(
                 $this->catRepository->findAllVisibleQuery(),
                 $request->query->getInt('page', 1),
@@ -56,14 +58,15 @@ class CatsController extends AbstractController
         }
 
         return $this->render('cats/list.html.twig', [
-            'cats' => $cats
+            'cats' => $cats,
         ]);
     }
 
     /**
      * @Route("/create", name="create")
      */
-    public function create(Request $request) : Response {
+    public function create(Request $request): Response
+    {
         $cat = new Cat();
         $cat->setUser($this->getUser());
         $form = $this->createForm(CatType::class, $cat);
@@ -78,14 +81,15 @@ class CatsController extends AbstractController
         }
 
         return $this->render('cats/create.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
     /**
      * @Route("/edit/{id}", name="edit", methods="GET|POST")
      */
-    public function edit(Cat $cat, Request $request, LoggerInterface $logger) : Response {
+    public function edit(Cat $cat, Request $request, LoggerInterface $logger): Response
+    {
         $form = $this->createForm(CatType::class, $cat);
         $form->handleRequest($request);
 
@@ -99,18 +103,18 @@ class CatsController extends AbstractController
 
         return $this->render('cats/edit.html.twig', [
             'cat' => $cat,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
     /**
      * @Route("/edit/{id}", name="delete", methods="DELETE")
-     * @param Cat $cat
-     * @param Request $request
+     *
      * @return RedirectResponse
      */
-    public function delete(Cat $cat, Request $request) {
-        if ($this->isCsrfTokenValid('delete' . $cat->getId(), $request->get('_token'))) {
+    public function delete(Cat $cat, Request $request)
+    {
+        if ($this->isCsrfTokenValid('delete'.$cat->getId(), $request->get('_token'))) {
             $this->em->remove($cat);
             $this->em->flush();
             $this->addFlash('success', 'flash.delete.cat.success');

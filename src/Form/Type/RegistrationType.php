@@ -22,7 +22,7 @@ class RegistrationType extends AbstractType
             ->add('email', EmailType::class)
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'invalid_message' => 'form.error.password.repeated'
+                'invalid_message' => 'form.error.password.repeated',
             ])
         ;
     }

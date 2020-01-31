@@ -1,13 +1,9 @@
 <?php
 
-
 namespace App\Command;
 
-
-use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,7 +15,8 @@ class UserDisabledCommand extends Command
 
     private $em;
 
-    public function __construct(UserRepository $userRepository, ObjectManager $em, $name = null) {
+    public function __construct(UserRepository $userRepository, ObjectManager $em, $name = null)
+    {
         parent::__construct($name);
         $this->userRepository = $userRepository;
         $this->em = $em;
@@ -27,8 +24,8 @@ class UserDisabledCommand extends Command
 
     public function configure()
     {
-        $this->setName("user:disabled");
-        $this->setDescription("Disabled user last_update +5 years");
+        $this->setName('user:disabled');
+        $this->setDescription('Disabled user last_update +5 years');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -41,30 +38,30 @@ class UserDisabledCommand extends Command
 
             $progressBar = new ProgressBar($output, $countUserDisabled);
             $progressBar->setBarCharacter('<fg=green>⚬</>');
-            $progressBar->setEmptyBarCharacter("<fg=red>⚬</>");
-            $progressBar->setProgressCharacter("<fg=green>➤</>");
+            $progressBar->setEmptyBarCharacter('<fg=red>⚬</>');
+            $progressBar->setProgressCharacter('<fg=green>➤</>');
             $progressBar->setFormat(
                 "<fg=white;bg=cyan> %status:-45s%</>\n%current%/%max% [%bar%] %percent:3s%%\n  %estimated:-20s%  %memory:20s%"
             );
             $progressBar->start();
 
-            for ($i = 0; $i < $countUserDisabled; $i++) {
+            for ($i = 0; $i < $countUserDisabled; ++$i) {
                 $user = $this->userRepository->find($userDisabled[$i]->getId());
                 $user->setIsActive(false);
                 $this->em->flush();
 
                 if ($i < $countThree) {
-                    $progressBar->setMessage("Starting...", 'status');
+                    $progressBar->setMessage('Starting...', 'status');
                 } elseif ($i < $countThree * 2) {
-                    $progressBar->setMessage("Halfway :)", 'status');
+                    $progressBar->setMessage('Halfway :)', 'status');
                 } else {
-                    $progressBar->setMessage("Almost :D", 'status');
+                    $progressBar->setMessage('Almost :D', 'status');
                 }
                 $progressBar->advance();
                 usleep(200000);
             }
 
-            $progressBar->setMessage("Done !", 'status');
+            $progressBar->setMessage('Done !', 'status');
             $progressBar->finish();
         } else {
             $output->writeln('Aucun utilisateur !');

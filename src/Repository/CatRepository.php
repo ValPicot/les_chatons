@@ -33,7 +33,7 @@ class CatRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('c')
             ->orderBy('c.id')
             ->where('c.user = :user')
-            ->setParameter("user", $user)
+            ->setParameter('user', $user)
             ->getQuery();
     }
 
