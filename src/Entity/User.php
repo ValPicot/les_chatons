@@ -76,6 +76,11 @@ class User implements UserInterface,\Serializable
      */
     protected $oldPassword;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $resetToken;
+
     public function __construct()
     {
         $this->cats = new ArrayCollection();
@@ -283,6 +288,18 @@ class User implements UserInterface,\Serializable
     public function setOldPassword($oldPassword)
     {
         $this->oldPassword = $oldPassword;
+        return $this;
+    }
+
+    public function getResetToken(): ?string
+    {
+        return $this->resetToken;
+    }
+
+    public function setResetToken(?string $resetToken): self
+    {
+        $this->resetToken = $resetToken;
+
         return $this;
     }
 }

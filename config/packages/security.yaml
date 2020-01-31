@@ -32,7 +32,8 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/cats, roles: [ROLE_ADMIN, ROLE_OWNER_CAT] }
-        - { path: ^/users, roles: [ROLE_ADMIN] }
+        - { path: ^/users/list, roles: [ROLE_ADMIN] }
+        - { path: ^/users/create, roles: [ROLE_ADMIN] }
 
     encoders:
         App\Entity\User:
