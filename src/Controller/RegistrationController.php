@@ -69,9 +69,15 @@ class RegistrationController extends AbstractController
     {
         $user = $this->userRepository->findOneBy(['resetToken' => $token]);
         if ($user) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $user->setIsActive(1);
-            $entityManager->flush();
+            $message = 'Votre compte à déjà été validé';
+            if (!$user->getIsActive()) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $user->setIsActive(1);
+                $entityManager->flush();
+                $message = 'Félicitation ! Votre compte est bien validé';
+            }
+
+            $this->container->get('session')->set('message', $message);
 
             return $this->redirectToRoute('confirm_email');
         } else {
@@ -84,6 +90,10 @@ class RegistrationController extends AbstractController
      */
     public function confirmEmail()
     {
-        return $this->render('users/validated.html.twig');
+        $message = $this->container->get('session')->get('message');
+
+        return $this->render('users/validated.html.twig', [
+            'message' => $message,
+        ]);
     }
 }
