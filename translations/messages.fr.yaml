@@ -99,7 +99,7 @@ page:
         registration:
             title: "S'inscrire"
 
-admin:
-    roles:
-        ROLE_ADMIN: 'Administrator'
-        ROLE_OWNER_CAT: 'Propriétaire de chat'
+
+roles:
+    ROLE_ADMIN: 'Administrateur'
+    ROLE_OWNER_CAT: 'Propriétaire de chat'

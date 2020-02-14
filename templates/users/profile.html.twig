@@ -19,7 +19,7 @@
             <div class="col-xs-12 col-sm-12">Name : {{ user.name }}</div>
             <div class="col-xs-12 col-sm-12">Lastname : {{ user.lastname }}</div>
             <div class="col-xs-12 col-sm-12">Email : {{ user.email }}</div>
-            <div class="col-xs-12 col-sm-12">Rôle(s) : {{ user.roles|join(', ')|lower }}</div>
+            <div class="col-xs-12 col-sm-12">Rôle(s) : {% for role in user.roles %}{{ ('roles.' ~ role)|trans }}{% if not loop.last %}, {% endif %} {% endfor %}</div>
         </div>
     </div>
 
