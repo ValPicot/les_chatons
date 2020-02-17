@@ -57,6 +57,8 @@ form:
         password:
             first: 'Nouveau mot de passe'
             second: 'Répéter le nouveau mot de passe'
+    forgot_password:
+        oldPassword: "Ancien mot de passe"
 
 page:
     cat:
@@ -98,6 +100,10 @@ page:
             title: 'Éditer le profil'
         registration:
             title: "S'inscrire"
+        forgotpassword:
+            title: "Changer de mot de passe"
+    login:
+      forgotpassword: "Mot de passe oublié ?"
 
 
 roles:
