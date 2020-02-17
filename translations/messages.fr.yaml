@@ -104,7 +104,12 @@ page:
         forgotpassword:
             title: "Changer de mot de passe"
     login:
-      forgotpassword: "Mot de passe oublié ?"
+        forgotpassword: "Mot de passe oublié ?"
+    forgot_password:
+        success: "Un lien vient d'être envoyé sur votre l'adresse email renseigné pour réinitialiser le mot de passe."
+        danger: "Cette adresse email n'existe pas !"
+
+
 
 
 roles:

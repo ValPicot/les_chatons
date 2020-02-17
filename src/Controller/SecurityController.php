@@ -45,10 +45,6 @@ class SecurityController extends AbstractController
      */
     public function resetPassword(Request $request, string $token): Response
     {
-        if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
-            return $this->redirectToRoute('cats_list');
-        }
-
         $form = $this->createForm(ResetPasswordType::class);
         $form->handleRequest($request);
 
@@ -76,7 +72,9 @@ class SecurityController extends AbstractController
         $form = $this->createForm(ForgotPasswordType::class, null);
 
         if ($handler->process($form, $request)) {
-            $this->addFlash('success', 'OK');
+            $this->addFlash('success', 'page.forgot_password.success');
+        } else {
+            $this->addFlash('danger', 'page.forgot_password.danger');
         }
 
         return $this->render('security/forgotpassword.html.twig', [

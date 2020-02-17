@@ -41,8 +41,6 @@ class ForgotPasswordHandler extends BaseHandler
             $this->mailer->sendMail($bodyMail, 'noreply@leschatons.fr', $user->getEmail(), 'Réinitialiser votre mot de passe');
 
             return true;
-        } else {
-            //$this->request->getSession()->getFlashBag()->add('danger', 'error');
         }
 
         return false;
