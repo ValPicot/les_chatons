@@ -57,9 +57,10 @@ form:
         password:
             first: 'Nouveau mot de passe'
             second: 'Répéter le nouveau mot de passe'
-    forgot_password:
+    reset_password:
         oldPassword: "Ancien mot de passe"
-
+    forgot_password:
+        email: "Email"
 page:
     cat:
         list:

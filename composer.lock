@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "edba078861a5b595117789d38ec42ab3",
+    "content-hash": "e398eb673fbdee04022f494d21a8074f",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -4932,16 +4932,16 @@
         },
         {
             "name": "symfony/templating",
-            "version": "v4.3.6",
+            "version": "v4.3.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/templating.git",
-                "reference": "b513c4152bcaf1e54889ff8b75760fad53385707"
+                "reference": "f566e0d4624eb4a4ec5847fdb46808ffc4168a0c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/templating/zipball/b513c4152bcaf1e54889ff8b75760fad53385707",
-                "reference": "b513c4152bcaf1e54889ff8b75760fad53385707",
+                "url": "https://api.github.com/repos/symfony/templating/zipball/f566e0d4624eb4a4ec5847fdb46808ffc4168a0c",
+                "reference": "f566e0d4624eb4a4ec5847fdb46808ffc4168a0c",
                 "shasum": ""
             },
             "require": {
@@ -4984,7 +4984,7 @@
             ],
             "description": "Symfony Templating Component",
             "homepage": "https://symfony.com",
-            "time": "2019-10-28T17:07:32+00:00"
+            "time": "2020-01-04T12:24:57+00:00"
         },
         {
             "name": "symfony/translation",

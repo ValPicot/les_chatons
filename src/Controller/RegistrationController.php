@@ -51,7 +51,7 @@ class RegistrationController extends AbstractController
             $this->em->persist($user);
             $this->em->flush();
 
-            $bodyMail = $this->renderView('emails/users.html.twig', ['user' => $user]);
+            $bodyMail = $this->renderView('emails/activeAccount.html.twig', ['user' => $user]);
             $this->mailerService->sendMail($bodyMail, 'noreply@leschatons.fr', $user->getEmail(), 'Confirmation d\'email');
 
             return $this->redirectToRoute('login');
