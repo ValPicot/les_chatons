@@ -2,14 +2,17 @@
 namespace App\Controller;
 
 use App\Form\Handler\ForgotPasswordHandler;
+use App\Form\Handler\ResetPasswordHandler;
 use App\Form\Type\ForgotPasswordType;
 use App\Form\Type\ResetPasswordType;
+use App\Repository\UserRepository;
 use App\Service\MailerService;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
@@ -18,10 +21,16 @@ class SecurityController extends AbstractController
 
     private $mailer;
 
-    public function __construct(ObjectManager $em, MailerService $mailer)
+    private $userRepository;
+
+    private $encoder;
+
+    public function __construct(ObjectManager $em, MailerService $mailer, UserRepository $userRepository, UserPasswordEncoderInterface $encoder)
     {
         $this->em = $em;
         $this->mailer = $mailer;
+        $this->userRepository = $userRepository;
+        $this->encoder = $encoder;
     }
     /**
      * @Route("/login", name="login")
@@ -43,17 +52,30 @@ class SecurityController extends AbstractController
     /**
      * @Route("/resetPassword/{token}", name="resetPassword")
      */
-    public function resetPassword(Request $request, string $token): Response
+    public function resetPassword(Request $request, string $token, ResetPasswordHandler $handler): Response
     {
-        $form = $this->createForm(ResetPasswordType::class);
-        $form->handleRequest($request);
+        $user = $this->userRepository->findOneBy(['resetToken' => $token]);
+        $form = $this->createForm(ResetPasswordType::class, null);
+        //$form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->em->flush();
+        if ($handler->processPasswordChange($form, $request, $user)) {
+            $this->addFlash('success', 'Test');
+            //$this->addFlash('success', $translator->trans('password_change_success'));
+
+            return $this->redirectToRoute('login');
+        }
+
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $data = $form->getData();
+//            dd($data);
+//            $random = md5(random_bytes(60));
+//            $user->setPassword($this->encoder->encodePassword($user, $data->getPassword()));
+//            $user->setResetToken($random);
+//            $this->em->flush();
 //            $this->addFlash('success', 'flash.edit.user.success');
 //
 //            return $this->redirectToRoute('users_profile');
-        }
+//        }
 
         return $this->render('security/resetpassword.html.twig', [
             'form' => $form->createView(),
@@ -73,8 +95,6 @@ class SecurityController extends AbstractController
 
         if ($handler->process($form, $request)) {
             $this->addFlash('success', 'page.forgot_password.success');
-        } else {
-            $this->addFlash('danger', 'page.forgot_password.danger');
         }
 
         return $this->render('security/forgotpassword.html.twig', [

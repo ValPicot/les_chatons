@@ -33,15 +33,15 @@
                     <td style="background-color: {{ cat.color }}"></td>
                     <td>{{ cat.race }}</td>
                     <td>
-                        {% if cat.filename %}
-                            {% if cat.filename starts with 'https://' %}
-                                <img src="{{ cat.filename }}" alt="">
-                            {% else %}
-                                <img src="{{ vich_uploader_asset(cat, 'image') | imagine_filter('thumb') }}" alt="">
-                            {% endif %}
-                        {% else %}
-                            <img src="{{ asset('/images/cats/empty.jpg') | imagine_filter('thumb') }}" alt="">
-                        {% endif %}
+{#                        {% if cat.filename %}#}
+{#                            {% if cat.filename starts with 'https://' %}#}
+{#                                <img src="{{ cat.filename }}" alt="">#}
+{#                            {% else %}#}
+{#                                <img src="{{ vich_uploader_asset(cat, 'image') | imagine_filter('thumb') }}" alt="">#}
+{#                            {% endif %}#}
+{#                        {% else %}#}
+{#                            <img src="{{ asset('/images/cats/empty.jpg') | imagine_filter('thumb') }}" alt="">#}
+{#                        {% endif %}#}
                     </td>
                     <td>{{ cat.user.username }}</td>
                     <td>
