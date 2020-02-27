@@ -6,7 +6,7 @@ use App\Entity\User;
 use App\Form\Type\RegistrationType;
 use App\Repository\UserRepository;
 use App\Service\MailerService;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,7 +19,7 @@ class RegistrationController extends AbstractController
     private $userRepository;
     private $mailerService;
 
-    public function __construct(ObjectManager $em, UserPasswordEncoderInterface $encoder, UserRepository $userRepository, MailerService $mailerService)
+    public function __construct(EntityManagerInterface $em, UserPasswordEncoderInterface $encoder, UserRepository $userRepository, MailerService $mailerService)
     {
         $this->em = $em;
         $this->encoder = $encoder;

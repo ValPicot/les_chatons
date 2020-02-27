@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Cat;
 use App\Form\Type\CatType;
 use App\Repository\CatRepository;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,13 +25,13 @@ class CatsController extends AbstractController
      */
     private $catRepository;
     /**
-     * @var ObjectManager
+     * @var EntityManagerInterface
      */
     private $em;
 
     private $security;
 
-    public function __construct(CatRepository $catRepository, ObjectManager $em, Security $security)
+    public function __construct(CatRepository $catRepository, EntityManagerInterface $em, Security $security)
     {
         $this->catRepository = $catRepository;
         $this->em = $em;

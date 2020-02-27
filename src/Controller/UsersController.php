@@ -6,7 +6,7 @@ use App\Entity\User;
 use App\Form\Type\ProfileType;
 use App\Form\Type\UserType;
 use App\Repository\UserRepository;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +22,7 @@ class UsersController extends AbstractController
 
     private $em;
 
-    public function __construct(UserRepository $userRepository, ObjectManager $em)
+    public function __construct(UserRepository $userRepository, EntityManagerInterface $em)
     {
         $this->userRepository = $userRepository;
         $this->em = $em;

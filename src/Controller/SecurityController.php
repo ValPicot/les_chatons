@@ -7,7 +7,7 @@ use App\Form\Type\ForgotPasswordType;
 use App\Form\Type\ResetPasswordType;
 use App\Repository\UserRepository;
 use App\Service\MailerService;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,7 +25,7 @@ class SecurityController extends AbstractController
 
     private $encoder;
 
-    public function __construct(ObjectManager $em, MailerService $mailer, UserRepository $userRepository, UserPasswordEncoderInterface $encoder)
+    public function __construct(EntityManagerInterface $em, MailerService $mailer, UserRepository $userRepository, UserPasswordEncoderInterface $encoder)
     {
         $this->em = $em;
         $this->mailer = $mailer;

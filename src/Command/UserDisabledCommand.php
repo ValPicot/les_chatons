@@ -3,7 +3,7 @@
 namespace App\Command;
 
 use App\Repository\UserRepository;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
@@ -15,7 +15,7 @@ class UserDisabledCommand extends Command
 
     private $em;
 
-    public function __construct(UserRepository $userRepository, ObjectManager $em, $name = null)
+    public function __construct(UserRepository $userRepository, EntityManagerInterface $em, $name = null)
     {
         parent::__construct($name);
         $this->userRepository = $userRepository;
