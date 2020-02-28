@@ -8,7 +8,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -68,13 +67,6 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="string", length=255)
      */
     private $lastname;
-
-    /**
-     * @SecurityAssert\UserPassword(
-     *     message = "Votre ancien mot de passe n'est pas bon !", groups={"user_edit"}
-     * )
-     */
-    protected $oldPassword;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -276,26 +268,6 @@ class User implements UserInterface, \Serializable
     public function setLastname(string $lastname): self
     {
         $this->lastname = $lastname;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getOldPassword()
-    {
-        return $this->oldPassword;
-    }
-
-    /**
-     * @param mixed $oldPassword
-     *
-     * @return User
-     */
-    public function setOldPassword($oldPassword)
-    {
-        $this->oldPassword = $oldPassword;
 
         return $this;
     }
