@@ -22,12 +22,14 @@ class UserFixtures extends Fixture
         $faker = Factory::create('fr_FR');
 
         $user = new User();
-        //$user->setUsername('demo');
+
+        $random = md5(random_bytes(60));
         $user->setEmail('admin@ylly.fr');
         $user->setName('Name');
         $user->setLastname('Lastname');
         $user->setPassword($this->encoder->encodePassword($user, 'demo'));
         $user->setRoles(['ROLE_ADMIN']);
+        $user->setResetToken($random);
         $user->setCreatedAt(new \DateTime('now'));
         $user->setUpdatedAt(new \DateTime('now'));
         $manager->persist($user);
@@ -35,11 +37,12 @@ class UserFixtures extends Fixture
         for ($i = 0; $i < 50; ++$i) {
             $setCreated = $faker->dateTimeBetween('-15 years', 'now');
             $user = new User();
-            //$user->setUsername($faker->name);
             $user->setEmail($faker->email);
-            $user->setName($faker->name);
+            $user->setName($faker->firstName);
             $user->setLastname($faker->lastName);
             $user->setPassword($this->encoder->encodePassword($user, 'cat'));
+            $random = md5(random_bytes(60));
+            $user->setResetToken($random);
             $user->setCreatedAt($setCreated);
             $user->setUpdatedAt($faker->dateTimeBetween($setCreated, 'now'));
             $manager->persist($user);

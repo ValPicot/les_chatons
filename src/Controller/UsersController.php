@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/users", name="users_")
@@ -22,10 +23,13 @@ class UsersController extends AbstractController
 
     private $em;
 
-    public function __construct(UserRepository $userRepository, EntityManagerInterface $em)
+    private $encoder;
+
+    public function __construct(UserRepository $userRepository, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder)
     {
         $this->userRepository = $userRepository;
         $this->em = $em;
+        $this->encoder = $encoder;
     }
 
     /**
@@ -62,6 +66,12 @@ class UsersController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $random = md5(random_bytes(60));
+            $user->setCreatedAt(new \DateTime('now'));
+            $user->setUpdatedAt(new \DateTime('now'));
+            $user->setPassword($this->encoder->encodePassword($user, $data->getPassword()));
+            $user->setResetToken($random);
             $this->em->persist($user);
             $this->em->flush();
             $this->addFlash('success', 'flash.create.cat.success');

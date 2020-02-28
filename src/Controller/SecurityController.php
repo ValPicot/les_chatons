@@ -65,18 +65,6 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('login');
         }
 
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $data = $form->getData();
-//            dd($data);
-//            $random = md5(random_bytes(60));
-//            $user->setPassword($this->encoder->encodePassword($user, $data->getPassword()));
-//            $user->setResetToken($random);
-//            $this->em->flush();
-//            $this->addFlash('success', 'flash.edit.user.success');
-//
-//            return $this->redirectToRoute('users_profile');
-//        }
-
         return $this->render('security/resetpassword.html.twig', [
             'form' => $form->createView(),
         ]);
