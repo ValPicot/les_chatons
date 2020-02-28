@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Repository\UserRepository;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -11,14 +11,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class UserDisabledCommand extends Command
 {
-    private $userRepository;
-
     private $em;
 
-    public function __construct(UserRepository $userRepository, EntityManagerInterface $em, $name = null)
+    public function __construct(EntityManagerInterface $em, $name = null)
     {
         parent::__construct($name);
-        $this->userRepository = $userRepository;
         $this->em = $em;
     }
 
@@ -30,7 +27,7 @@ class UserDisabledCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $userDisabled = $this->userRepository->userDisabled();
+        $userDisabled = $this->em->getRepository(User::class)->userDisabled();
         $countUserDisabled = count($userDisabled);
 
         if ($countUserDisabled) {
@@ -39,15 +36,20 @@ class UserDisabledCommand extends Command
             $progressBar = new ProgressBar($output, $countUserDisabled);
             $progressBar->setBarCharacter('<fg=green>⚬</>');
             $progressBar->setEmptyBarCharacter('<fg=red>⚬</>');
-            $progressBar->setProgressCharacter('<fg=green>➤</>');
+            $progressBar->setProgressCharacter('<fg=green>|</>');
             $progressBar->setFormat(
                 "<fg=white;bg=cyan> %status:-45s%</>\n%current%/%max% [%bar%] %percent:3s%%\n  %estimated:-20s%  %memory:20s%"
             );
             $progressBar->start();
 
-            for ($i = 0; $i < $countUserDisabled; ++$i) {
-                $user = $this->userRepository->find($userDisabled[$i]->getId());
+            $i = 0;
+            foreach ($userDisabled as $user) {
+                ++$i;
+                $user->setName('Les');
+                $user->setLastname('chatons');
+                $user->setEmail('leschatons@leschatons.fr');
                 $user->setIsActive(false);
+                $user->setResetToken(null);
                 $this->em->flush();
 
                 if ($i < $countThree) {
@@ -63,6 +65,7 @@ class UserDisabledCommand extends Command
 
             $progressBar->setMessage('Done !', 'status');
             $progressBar->finish();
+            $output->writeln('');
         } else {
             $output->writeln('Aucun utilisateur !');
         }
