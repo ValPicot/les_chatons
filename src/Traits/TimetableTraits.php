@@ -61,7 +61,7 @@ trait TimetableTraits
     public function updatedTimestamps()
     {
         $this->setUpdatedAt(new \DateTime('now'));
-        if ($this->getCreatedAt() == null) {
+        if (null == $this->getCreatedAt()) {
             $this->setCreatedAt(new \DateTime('now'));
         }
     }

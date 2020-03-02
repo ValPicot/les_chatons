@@ -3,6 +3,7 @@
 namespace App\Command;
 
 use App\Entity\User;
+use App\Service\RandomService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -13,10 +14,13 @@ class UserDisabledCommand extends Command
 {
     private $em;
 
-    public function __construct(EntityManagerInterface $em, $name = null)
+    private $randomService;
+
+    public function __construct(EntityManagerInterface $em, RandomService $randomService, $name = null)
     {
         parent::__construct($name);
         $this->em = $em;
+        $this->randomService = $randomService;
     }
 
     public function configure()
@@ -45,12 +49,7 @@ class UserDisabledCommand extends Command
             $i = 0;
             foreach ($userDisabled as $user) {
                 ++$i;
-                $user->setName('Les');
-                $user->setLastname('chatons');
-                $user->setEmail('leschatons@leschatons.fr');
-                $user->setIsActive(false);
-                $user->setResetToken(null);
-                $this->em->flush();
+                $this->randomService->randomUser($user);
 
                 if ($i < $countThree) {
                     $progressBar->setMessage('Starting...', 'status');
