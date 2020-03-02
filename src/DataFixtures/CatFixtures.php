@@ -18,7 +18,7 @@ class CatFixtures extends Fixture implements DependentFixtureInterface
         for ($i = 0; $i < 200; ++$i) {
             $cat = new Cat();
             $cat
-                ->setName($faker->name)
+                ->setName($faker->firstName)
                 ->setColor($faker->hexColor)
                 ->setRace($faker->words(1, true))
                 ->setFilename($faker->imageUrl(100, 75, 'cats'))
