@@ -30,8 +30,6 @@ class UserFixtures extends Fixture
         $user->setPassword($this->encoder->encodePassword($user, 'demo'));
         $user->setRoles(['ROLE_ADMIN']);
         $user->setResetToken($random);
-        $user->setCreatedAt(new \DateTime('now'));
-        $user->setUpdatedAt(new \DateTime('now'));
         $manager->persist($user);
 
         for ($i = 0; $i < 50; ++$i) {

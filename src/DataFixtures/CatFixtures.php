@@ -22,8 +22,6 @@ class CatFixtures extends Fixture implements DependentFixtureInterface
                 ->setColor($faker->hexColor)
                 ->setRace($faker->words(1, true))
                 ->setFilename($faker->imageUrl(100, 75, 'cats'))
-                //->setUpdatedAt(new \DateTime('now'))
-                //->setCreatedAt(new \DateTime('now'))
                 ->setUser($faker->randomElement($users))
             ;
             $manager->persist($cat);

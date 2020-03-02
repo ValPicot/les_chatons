@@ -11,6 +11,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CatRepository")
+ * @ORM\HasLifecycleCallbacks
  * @Vich\Uploadable()
  */
 class Cat
