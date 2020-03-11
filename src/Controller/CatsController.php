@@ -43,19 +43,11 @@ class CatsController extends AbstractController
      */
     public function list(PaginatorInterface $paginator, Request $request): Response
     {
-        if ($this->security->isGranted('ROLE_ADMIN')) {
-            $cats = $paginator->paginate(
-                $this->catRepository->findAllVisibleQuery(),
-                $request->query->getInt('page', 1),
-                15
-            );
-        } else {
-            $cats = $paginator->paginate(
-                $this->catRepository->findAllVisibleByUserIdQuery($this->getUser()),
-                $request->query->getInt('page', 1),
-                15
-            );
-        }
+        $cats = $paginator->paginate(
+            $this->catRepository->findVisibleCats($this->getUser()),
+            $request->query->getInt('page', 1),
+            15
+        );
 
         return $this->render('cats/list.html.twig', [
             'cats' => $cats,

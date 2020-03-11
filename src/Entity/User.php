@@ -20,6 +20,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class User implements UserInterface, \Serializable
 {
+    const ROLE_ADMIN = 'ROLE_ADMIN';
+
     use TimetableTraits;
 
     /**
@@ -130,6 +132,11 @@ class User implements UserInterface, \Serializable
         $this->roles = $roles;
 
         return $this;
+    }
+
+    public function hasRoles(string $role)
+    {
+        return in_array($role, $this->getRoles());
     }
 
     /**

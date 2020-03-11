@@ -52,13 +52,12 @@ class SecurityController extends AbstractController
     /**
      * @Route("/resetPassword/{token}", name="resetPassword")
      */
-    public function resetPassword(Request $request, string $token, ResetPasswordHandler $handler): Response
+    public function resetPassword(Request $request, ResetPasswordHandler $handler, string $token): Response
     {
         $user = $this->userRepository->findOneBy(['resetToken' => $token]);
-        $form = $this->createForm(ResetPasswordType::class, null);
-        //$form->handleRequest($request);
+        $form = $this->createForm(ResetPasswordType::class, null, ['user' => $user]);
 
-        if ($handler->processPasswordChange($form, $request, $user)) {
+        if ($handler->process($form, $request)) {
             $this->addFlash('success', 'Test');
             //$this->addFlash('success', $translator->trans('password_change_success'));
 

@@ -14,19 +14,11 @@ trait TimetableTraits
      */
     private $updatedAt;
 
-    /**
-     * @return mixed
-     */
     public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
 
-    /**
-     * @param mixed $createdAt
-     *
-     * @return TimetableTraits
-     */
     public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
@@ -34,19 +26,11 @@ trait TimetableTraits
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
     }
 
-    /**
-     * @param mixed $updatedAt
-     *
-     * @return TimetableTraits
-     */
     public function setUpdatedAt(\DateTime $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
@@ -56,13 +40,18 @@ trait TimetableTraits
 
     /**
      * @ORM\PrePersist
+     */
+    public function createdTimestamps()
+    {
+        $this->setUpdatedAt(new \DateTime('now'));
+        $this->setCreatedAt(new \DateTime('now'));
+    }
+
+    /**
      * @ORM\PreUpdate
      */
     public function updatedTimestamps()
     {
         $this->setUpdatedAt(new \DateTime('now'));
-        if (null == $this->getCreatedAt()) {
-            $this->setCreatedAt(new \DateTime('now'));
-        }
     }
 }

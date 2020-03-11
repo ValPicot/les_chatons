@@ -21,48 +21,18 @@ class CatRepository extends ServiceEntityRepository
         parent::__construct($registry, Cat::class);
     }
 
-    public function findAllVisibleQuery(): Query
+    public function findVisibleCats(User $user): Query
     {
-        return $this->createQueryBuilder('c')
-            ->orderBy('c.id')
-            ->getQuery();
-    }
+        if ($user->hasRoles(User::ROLE_ADMIN)) {
+            return $this->createQueryBuilder('c')
+                ->orderBy('c.id')
+                ->getQuery();
+        }
 
-    public function findAllVisibleByUserIdQuery(User $user): Query
-    {
         return $this->createQueryBuilder('c')
             ->orderBy('c.id')
             ->where('c.user = :user')
             ->setParameter('user', $user)
             ->getQuery();
     }
-
-    // /**
-    //  * @return Cat[] Returns an array of Cat objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Cat
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
