@@ -33,6 +33,7 @@ class User implements UserInterface, \Serializable
 
     /**
      * @Assert\NotBlank(groups={"registration"})
+     * @Assert\Length(minMessage="Min 3 caractères", maxMessage="Max 255 caractères", min="3", max="255")
      * @ORM\Column(type="string", length=255)
      */
     private $password;
@@ -55,23 +56,27 @@ class User implements UserInterface, \Serializable
     /**
      * @Assert\NotBlank()
      * @Assert\Email()
+     * @Assert\Length(maxMessage="Max 255 caractères", max="255")
      * @ORM\Column(type="string", length=255)
      */
     private $email;
 
     /**
      * @Assert\NotBlank()
+     * @Assert\Length(minMessage="Min 2 caractères", maxMessage="Max 255 caractères", min="2", max="255")
      * @ORM\Column(type="string", length=255)
      */
     private $name;
 
     /**
      * @Assert\NotBlank()
+     * @Assert\Length(minMessage="Min 2 caractères", maxMessage="Max 255 caractères", min="2", max="255")
      * @ORM\Column(type="string", length=255)
      */
     private $lastname;
 
     /**
+     * @Assert\Length(maxMessage="Max 255 caractères", max="255")
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $resetToken;

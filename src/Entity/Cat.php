@@ -33,17 +33,20 @@ class Cat
     private $name;
 
     /**
+     * @Assert\Regex(pattern="/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/", message="Le format pour la couleur n'est pas bon (ex: #FFFF00)")
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $color;
 
     /**
      * @Assert\NotBlank()
+     * @Assert\Length(minMessage="Min 3 caractères", maxMessage="Max 255 caractères", min="3", max="255")
      * @ORM\Column(type="string", length=255)
      */
     private $race;
 
     /**
+     * @Assert\Length(maxMessage="Max 255 caractères", max="255")
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $filename;
@@ -58,20 +61,9 @@ class Cat
     private $image;
 
     /**
-     * @ORM\Column(type="datetime")
-     */
-    //private $updated_at;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="cats")
      */
     private $user;
-
-    public function __construct()
-    {
-        $this->updatedAt = new \DateTime('now');
-        $this->createdAt = new \DateTime('now');
-    }
 
     public function getId(): ?int
     {

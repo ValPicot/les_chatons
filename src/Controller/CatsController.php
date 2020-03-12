@@ -88,7 +88,7 @@ class CatsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->flush();
             $this->addFlash('success', 'flash.edit.cat.success');
-            $logger->info('Un chat à été crée ! ');
+            $logger->info('Un chat à été crée par '.$this->getUser()->getEmail().'('.$this->getUser()->getId().') avec l\'ID '.$cat->getId().' ! ');
 
             return $this->redirectToRoute('cats_list');
         }

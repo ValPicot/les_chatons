@@ -2,6 +2,7 @@
 
 namespace App\Form\Handler;
 
+use App\Entity\User;
 use App\Form\Handler\Base\BaseHandler;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -20,8 +21,10 @@ class ResetPasswordHandler extends BaseHandler
 
     public function onSuccess(): bool
     {
+        /** @var User $user */
         $user = $this->form->getConfig()->getOption('user');
         $user->setPassword($this->userPasswordEncoder->encodePassword($user, $this->form->getData()['newPassword']));
+        $user->setResetToken(null);
 
         $this->entityManager->flush();
 
