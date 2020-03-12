@@ -6,6 +6,8 @@ use App\Form\Handler\Base\BaseHandler;
 use App\Repository\UserRepository;
 use App\Service\MailerService;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Container\ContainerInterface;
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Templating\EngineInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -19,15 +21,15 @@ class ForgotPasswordHandler extends BaseHandler
 
     private $translator;
 
-    private $templating;
+    private $container;
 
-    public function __construct(UserRepository $userRepository, EntityManagerInterface $entityManager, MailerService $mailer, TranslatorInterface $translator, EngineInterface $templating)
+    public function __construct(UserRepository $userRepository, EntityManagerInterface $entityManager, MailerService $mailer, TranslatorInterface $translator, ContainerInterface $container)
     {
         $this->userRepository = $userRepository;
         $this->entityManager = $entityManager;
         $this->mailer = $mailer;
         $this->translator = $translator;
-        $this->templating = $templating;
+        $this->container = $container;
     }
 
     public function onSuccess(): bool
@@ -37,7 +39,7 @@ class ForgotPasswordHandler extends BaseHandler
             $random = md5(random_bytes(60));
             $user->setResetToken($random);
             $this->entityManager->flush();
-            $bodyMail = $this->templating->render('emails/forgotPassword.html.twig', ['user' => $user]);
+            $bodyMail = $this->container->get('twig')->render('emails/forgotPassword.html.twig', ['user' => $user]);
             $this->mailer->sendMail($bodyMail, 'noreply@leschatons.fr', $user->getEmail(), 'Réinitialiser votre mot de passe');
 
             return true;
