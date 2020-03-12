@@ -19,43 +19,29 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
-    public function userDisabled()
+    public function userDisabled($years, int $limit = null)
     {
         return $this->createQueryBuilder('u')
             ->where('u.updatedAt <= :date_end')
-            ->andWhere('u.isActive = true')
-            ->setParameter('date_end', new \DateTime('-5 years'))
+            ->andWhere('u.isActive = :is_active')
+            ->setParameter('date_end', new \DateTime('-'.$years.' years'))
+            ->setParameter('is_active', true)
+            ->setMaxResults($limit)
             ->getQuery()
             ->getResult()
         ;
     }
 
-    // /**
-    //  * @return User[] Returns an array of User objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function countUserDisabled($years)
     {
         return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
+            ->select('count(u.id)')
+            ->where('u.updatedAt <= :date_end')
+            ->andWhere('u.isActive = :is_active')
+            ->setParameter('date_end', new \DateTime('-'.$years.' years'))
+            ->setParameter('is_active', true)
             ->getQuery()
-            ->getResult()
+            ->getSingleScalarResult()
         ;
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?User
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

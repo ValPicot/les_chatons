@@ -3,17 +3,9 @@
 namespace App\Service;
 
 use App\Entity\User;
-use Doctrine\ORM\EntityManagerInterface;
 
 class RandomService
 {
-    private $em;
-
-    public function __construct(EntityManagerInterface $em)
-    {
-        $this->em = $em;
-    }
-
     private function generateRandomString($length = 10)
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -35,6 +27,5 @@ class RandomService
         $user->setEmail($randomString.'@leschatons.fr');
         $user->setIsActive(false);
         $user->setResetToken(null);
-        $this->em->flush();
     }
 }

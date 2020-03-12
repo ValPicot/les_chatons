@@ -23,13 +23,11 @@ class UserFixtures extends Fixture
 
         $user = new User();
 
-        $random = md5(random_bytes(60));
         $user->setEmail('admin@ylly.fr');
         $user->setName('Name');
         $user->setLastname('Lastname');
         $user->setPassword($this->encoder->encodePassword($user, 'demo'));
         $user->setRoles(['ROLE_ADMIN']);
-        $user->setResetToken($random);
         $manager->persist($user);
 
         for ($i = 0; $i < 50; ++$i) {
@@ -39,8 +37,6 @@ class UserFixtures extends Fixture
             $user->setName($faker->firstName);
             $user->setLastname($faker->lastName);
             $user->setPassword($this->encoder->encodePassword($user, 'cat'));
-            $random = md5(random_bytes(60));
-            $user->setResetToken($random);
             $user->setCreatedAt($setCreated);
             $user->setUpdatedAt($faker->dateTimeBetween($setCreated, 'now'));
             $manager->persist($user);

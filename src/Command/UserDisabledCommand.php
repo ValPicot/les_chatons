@@ -7,7 +7,9 @@ use App\Service\RandomService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class UserDisabledCommand extends Command
@@ -26,17 +28,24 @@ class UserDisabledCommand extends Command
     public function configure()
     {
         $this->setName('user:disabled');
-        $this->setDescription('Disabled user last_update +5 years');
+        $this->setDescription('Disabled user last_update -5 years by default');
+
+        $this->addOption('years', null, InputOption::VALUE_REQUIRED, 'Number of Years', 5);
+        $this->addOption('limit', null, InputOption::VALUE_REQUIRED, 'Limit select users');
+        $this->addOption('batch_size', null, InputOption::VALUE_REQUIRED, 'Batch size of flush', 100);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $userDisabled = $this->em->getRepository(User::class)->userDisabled();
-        $countUserDisabled = count($userDisabled);
+        $limit = $input->getOption('limit');
+        $years = $input->getOption('years');
+        $batch_size = $input->getOption('batch_size');
+
+        $userDisabled = $this->em->getRepository(User::class)->userDisabled($years, $limit);
+        $countUserDisabled = $this->em->getRepository(User::class)->countUserDisabled($years);
+        //var_dump(count($userDisabled));var_dump((int)$countUserDisabled);
 
         if ($countUserDisabled) {
-            $countThree = $countUserDisabled / 3;
-
             $progressBar = new ProgressBar($output, $countUserDisabled);
             $progressBar->setBarCharacter('<fg=green>⚬</>');
             $progressBar->setEmptyBarCharacter('<fg=red>⚬</>');
@@ -45,22 +54,20 @@ class UserDisabledCommand extends Command
                 "<fg=white;bg=cyan> %status:-45s%</>\n%current%/%max% [%bar%] %percent:3s%%\n  %estimated:-20s%  %memory:20s%"
             );
             $progressBar->start();
+            $progressBar->setMessage('Run ...', 'status');
+            do {
+                foreach ($userDisabled as $key => $user) {
+                    $this->randomService->randomUser($user);
+                    $progressBar->advance();
 
-            $i = 0;
-            foreach ($userDisabled as $user) {
-                ++$i;
-                $this->randomService->randomUser($user);
-
-                if ($i < $countThree) {
-                    $progressBar->setMessage('Starting...', 'status');
-                } elseif ($i < $countThree * 2) {
-                    $progressBar->setMessage('Halfway :)', 'status');
-                } else {
-                    $progressBar->setMessage('Almost :D', 'status');
+                    if (0 === $key % $batch_size) {
+                        $this->em->flush();
+                        sleep(1.5);
+                    }
                 }
-                $progressBar->advance();
-                usleep(200000);
-            }
+                $this->em->flush();
+                $userDisabled = $this->em->getRepository(User::class)->userDisabled($years, $limit);
+            } while (count($userDisabled) > 0);
 
             $progressBar->setMessage('Done !', 'status');
             $progressBar->finish();
