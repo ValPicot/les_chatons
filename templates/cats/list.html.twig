@@ -31,7 +31,7 @@
                     <th scope="row">{{ cat.id }}</th>
                     <td>{{ cat.name }}</td>
                     <td style="background-color: {{ cat.color }}"></td>
-                    <td>{{ cat.race }}</td>
+                    <td>{{ cat.race.name }}</td>
                     <td>
 {#                        {% if cat.filename %}#}
 {#                            {% if cat.filename starts with 'https://' %}#}

@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Cat;
+use App\Entity\Race;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -15,14 +16,15 @@ class CatFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Factory::create('fr_FR');
         $users = $manager->getRepository(User::class)->findAll();
+        $races = $manager->getRepository(Race::class)->findAll();
         for ($i = 0; $i < 200; ++$i) {
             $cat = new Cat();
             $cat
                 ->setName($faker->firstName)
                 ->setColor($faker->hexColor)
-                ->setRace($faker->words(1, true))
                 ->setFilename($faker->imageUrl(100, 75, 'cats'))
                 ->setUser($faker->randomElement($users))
+                ->setRace($faker->randomElement($races))
             ;
             $manager->persist($cat);
         }
@@ -34,6 +36,7 @@ class CatFixtures extends Fixture implements DependentFixtureInterface
     {
         return [
             UserFixtures::class,
+            RaceFixtures::class,
         ];
     }
 }

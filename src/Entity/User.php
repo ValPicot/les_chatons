@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -28,6 +29,7 @@ class User implements UserInterface, \Serializable
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"group1"})
      */
     private $id;
 
@@ -58,6 +60,7 @@ class User implements UserInterface, \Serializable
      * @Assert\Email()
      * @Assert\Length(maxMessage="Max 255 caractères", max="255")
      * @ORM\Column(type="string", length=255)
+     * @Groups({"group1"})
      */
     private $email;
 
@@ -65,6 +68,7 @@ class User implements UserInterface, \Serializable
      * @Assert\NotBlank()
      * @Assert\Length(minMessage="Min 2 caractères", maxMessage="Max 255 caractères", min="2", max="255")
      * @ORM\Column(type="string", length=255)
+     * @Groups({"group1"})
      */
     private $name;
 
@@ -72,6 +76,7 @@ class User implements UserInterface, \Serializable
      * @Assert\NotBlank()
      * @Assert\Length(minMessage="Min 2 caractères", maxMessage="Max 255 caractères", min="2", max="255")
      * @ORM\Column(type="string", length=255)
+     * @Groups({"group1"})
      */
     private $lastname;
 
@@ -80,6 +85,11 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $resetToken;
+
+    /**
+     * @ORM\Column(type="string", unique=true, nullable=true)
+     */
+    private $apiToken;
 
     public function __construct()
     {
@@ -293,6 +303,18 @@ class User implements UserInterface, \Serializable
     public function setResetToken(?string $resetToken): self
     {
         $this->resetToken = $resetToken;
+
+        return $this;
+    }
+
+    public function getApiToken()
+    {
+        return $this->apiToken;
+    }
+
+    public function setApiToken($apiToken)
+    {
+        $this->apiToken = $apiToken;
 
         return $this;
     }

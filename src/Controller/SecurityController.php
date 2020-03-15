@@ -9,6 +9,7 @@ use App\Repository\UserRepository;
 use App\Service\MailerService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -32,6 +33,15 @@ class SecurityController extends AbstractController
         $this->userRepository = $userRepository;
         $this->encoder = $encoder;
     }
+
+    /**
+     * @Route("/", name="home")
+     */
+    public function home()
+    {
+        return new RedirectResponse('login');
+    }
+
     /**
      * @Route("/login", name="login")
      */

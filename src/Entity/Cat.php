@@ -6,6 +6,7 @@ use App\Traits\TimetableTraits;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -22,6 +23,7 @@ class Cat
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"group1"})
      */
     private $id;
 
@@ -29,19 +31,20 @@ class Cat
      * @Assert\NotBlank(message="Test")
      * @Assert\Length(minMessage="Min 3 caractères", maxMessage="Max 255 caractères", min="3", max="255")
      * @ORM\Column(type="string", length=255)
+     * @Groups({"group1"})
      */
     private $name;
 
     /**
      * @Assert\Regex(pattern="/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/", message="Le format pour la couleur n'est pas bon (ex: #FFFF00)")
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"group1"})
      */
     private $color;
 
     /**
-     * @Assert\NotBlank()
-     * @Assert\Length(minMessage="Min 3 caractères", maxMessage="Max 255 caractères", min="3", max="255")
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Race", inversedBy="cats")
+     * @Groups({"group1"})
      */
     private $race;
 
@@ -62,6 +65,7 @@ class Cat
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="cats")
+     * @Groups({"group1"})
      */
     private $user;
 
@@ -132,18 +136,6 @@ class Cat
         return $this;
     }
 
-    public function getRace(): ?string
-    {
-        return $this->race;
-    }
-
-    public function setRace(string $race): self
-    {
-        $this->race = $race;
-
-        return $this;
-    }
-
     public function getUser(): ?User
     {
         return $this->user;
@@ -152,6 +144,18 @@ class Cat
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getRace(): ?Race
+    {
+        return $this->race;
+    }
+
+    public function setRace(?Race $race): self
+    {
+        $this->race = $race;
 
         return $this;
     }
