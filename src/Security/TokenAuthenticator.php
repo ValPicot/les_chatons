@@ -53,36 +53,14 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
         return $userProvider->loadUserByUsername($credentials['username']);
     }
 
-//    public function getUser($credentials, UserProviderInterface $userProvider)
-//    {
-//        if (null === $credentials) {
-//            // The token header was empty, authentication fails with 401
-//            return null;
-//        }
-//
-//        // if a User is returned, checkCredentials() is called
-//        return $this->em->getRepository(User::class)
-//            ->findOneBy(['apiToken' => $credentials])
-//            ;
-//    }
-
     public function checkCredentials($credentials, UserInterface $user): bool
     {
-        if (!$user instanceof User || !($user->hasRoles(User::ROLE_ADMIN))) {
+        if (!$user instanceof User || !($user->hasRoles(User::ROLE_ADMIN)) || !$user->getIsActive()) {
             return false;
         }
 
         return $this->userPasswordEncoder->isPasswordValid($user, $credentials['password']);
     }
-
-//    public function checkCredentials($credentials, UserInterface $user)
-//    {
-//        // check credentials - e.g. make sure the password is valid
-//        // no credential check is needed in this case
-//
-//        // return true to cause authentication success
-//        return true;
-//    }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
