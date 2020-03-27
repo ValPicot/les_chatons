@@ -12,15 +12,33 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        api:
-            pattern: ^/api/
-            logout:
-                path: /logout
+#        api:
+#            pattern: ^/api/
+#            logout:
+#                path: /logout
+#            anonymous: true
+#            provider: from_database
+#            guard:
+#                authenticators:
+#                    - App\Security\TokenAuthenticator
+
+        login_api:
+            pattern:  ^/api/login
+            stateless: true
             anonymous: true
-            provider: from_database
+            json_login:
+                check_path:               /api/login_check
+                success_handler:          lexik_jwt_authentication.handler.authentication_success
+                failure_handler:          lexik_jwt_authentication.handler.authentication_failure
+
+        api:
+            pattern:   ^/api
+            stateless: true
             guard:
                 authenticators:
-                    - App\Security\TokenAuthenticator
+                    - lexik_jwt_authentication.jwt_token_authenticator
+
+
         main:
             pattern: ^/
             logout:
@@ -38,9 +56,9 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/cats, roles: [ROLE_OWNER_CAT] }
-        - { path: ^/api, roles: [ROLE_ADMIN] }
-        - { path: ^/users, roles: [ROLE_ADMIN] }
+        - { path: ^/cats, roles: ROLE_OWNER_CAT }
+        - { path: ^/users, roles: ROLE_ADMIN }
+        - { path: ^/api, roles: ROLE_USER }
 
     encoders:
         App\Entity\User:

@@ -3,7 +3,10 @@
 namespace App\Form\Type;
 
 use App\Entity\Cat;
+use App\Entity\Race;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,7 +19,10 @@ class CatType extends AbstractType
         $builder
             ->add('name')
             ->add('color', ColorType::class)
-            ->add('race')
+            ->add('race', EntityType::class, [
+                'class' => Race::class,
+                'choice_label' => 'name',
+            ])
             ->add('image', FileType::class, [
                 'required' => false,
             ])

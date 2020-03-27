@@ -16,13 +16,13 @@ class Race
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"group1"})
+     * @Groups({"get_cat"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"group1"})
+     * @Groups({"list_cats", "get_cat"})
      */
     private $name;
 

@@ -29,7 +29,7 @@ class User implements UserInterface, \Serializable
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"group1"})
+     * @Groups({"get_cat"})
      */
     private $id;
 
@@ -37,6 +37,7 @@ class User implements UserInterface, \Serializable
      * @Assert\NotBlank(groups={"registration"})
      * @Assert\Length(minMessage="Min 3 caractères", maxMessage="Max 255 caractères", min="3", max="255")
      * @ORM\Column(type="string", length=255)
+     * @Groups({"get_cat"})
      */
     private $password;
 
@@ -60,7 +61,7 @@ class User implements UserInterface, \Serializable
      * @Assert\Email()
      * @Assert\Length(maxMessage="Max 255 caractères", max="255")
      * @ORM\Column(type="string", length=255)
-     * @Groups({"group1"})
+     * @Groups({"get_cat"})
      */
     private $email;
 
@@ -68,7 +69,7 @@ class User implements UserInterface, \Serializable
      * @Assert\NotBlank()
      * @Assert\Length(minMessage="Min 2 caractères", maxMessage="Max 255 caractères", min="2", max="255")
      * @ORM\Column(type="string", length=255)
-     * @Groups({"group1"})
+     * @Groups({"get_cat"})
      */
     private $name;
 
@@ -76,7 +77,7 @@ class User implements UserInterface, \Serializable
      * @Assert\NotBlank()
      * @Assert\Length(minMessage="Min 2 caractères", maxMessage="Max 255 caractères", min="2", max="255")
      * @ORM\Column(type="string", length=255)
-     * @Groups({"group1"})
+     * @Groups({"get_cat"})
      */
     private $lastname;
 

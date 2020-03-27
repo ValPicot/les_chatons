@@ -23,7 +23,7 @@ class Cat
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"group1"})
+     * @Groups({"list_cats", "get_cat"})
      */
     private $id;
 
@@ -31,20 +31,20 @@ class Cat
      * @Assert\NotBlank(message="Test")
      * @Assert\Length(minMessage="Min 3 caractères", maxMessage="Max 255 caractères", min="3", max="255")
      * @ORM\Column(type="string", length=255)
-     * @Groups({"group1"})
+     * @Groups({"list_cats", "get_cat"})
      */
     private $name;
 
     /**
      * @Assert\Regex(pattern="/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/", message="Le format pour la couleur n'est pas bon (ex: #FFFF00)")
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"group1"})
+     * @Groups({"list_cats", "get_cat"})
      */
     private $color;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Race", inversedBy="cats")
-     * @Groups({"group1"})
+     * @Groups({"list_cats", "get_cat"})
      */
     private $race;
 
@@ -65,7 +65,7 @@ class Cat
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="cats")
-     * @Groups({"group1"})
+     * @Groups({"get_cat"})
      */
     private $user;
 
