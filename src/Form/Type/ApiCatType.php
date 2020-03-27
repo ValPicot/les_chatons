@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CatType extends AbstractType
+class ApiCatType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -32,6 +32,7 @@ class CatType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Cat::class,
+            'csrf_protection' => false,
         ]);
     }
 }

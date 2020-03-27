@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Cat;
 use App\Entity\User;
+use App\Form\Type\ApiCatType;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -63,6 +64,7 @@ final class ApiController extends AbstractController
                 'message' => 'Accés refusé',
             ];
             $resultat = $this->serializer->serialize($data, 'json');
+
             return new JsonResponse($resultat, 403, [], true);
         }
     }
@@ -82,16 +84,54 @@ final class ApiController extends AbstractController
                 'message' => 'Accés refusé',
             ];
             $resultat = $this->serializer->serialize($data, 'json');
+
             return new JsonResponse($resultat, 403, [], true);
         }
+    }
+
+    /**
+     * @Route("/cat", name="cat_create", methods={"POST"})
+     */
+    public function createCat(Request $request)
+    {
+        $cat = new Cat();
+        $cat->setUser($this->getUser());
+        $form = $this->createForm(ApiCatType::class, $cat);
+        $data = json_decode($request->getContent(), true);
+        $form->submit($data);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($cat);
+            $em->flush();
+
+            $data = [
+                'message' => 'Chat crée',
+            ];
+            $resultat = $this->serializer->serialize($data, 'json');
+
+            return new JsonResponse($resultat, 201, [], true);
+
+            //return $this->handleView($this->view(['status' => 'ok'], Response::HTTP_CREATED));
+        }
+        $resultat = $this->serializer->serialize($form->getErrors(), 'json');
+        return new JsonResponse($resultat, 403, [], true);
+        //return$this->handleView($this->view($form->getErrors()));
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $this->em->persist($cat);
+//            $this->em->flush();
+//            $this->addFlash('success', 'flash.create.cat.success');
+//
+//            return $this->redirectToRoute('cats_list');
+//        }
+//
+//        return $this->render('cats/create.html.twig', [
+//            'form' => $form->createView(),
+//        ]);
     }
 
     //create - post
 
     //edit - put
-
-    //delete - delete
-    //Verifie proprietaire else 403 sauf admin
-    //code http 204 si delete
-    //Pourquoi 204 --> no content
 }
