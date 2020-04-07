@@ -25,12 +25,12 @@ class CatRepository extends ServiceEntityRepository
     {
         if ($user->hasRoles(User::ROLE_ADMIN)) {
             return $this->createQueryBuilder('c')
-                ->orderBy('c.id')
+                ->orderBy('c.id', 'DESC')
                 ->getQuery();
         }
 
         return $this->createQueryBuilder('c')
-            ->orderBy('c.id')
+            ->orderBy('c.id', 'DESC')
             ->where('c.user = :user')
             ->setParameter('user', $user)
             ->getQuery();

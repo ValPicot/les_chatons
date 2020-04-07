@@ -110,28 +110,34 @@ final class ApiController extends AbstractController
             $resultat = $this->serializer->serialize($data, 'json');
 
             return new JsonResponse($resultat, 201, [], true);
-
-            //return $this->handleView($this->view(['status' => 'ok'], Response::HTTP_CREATED));
         }
         $resultat = $this->serializer->serialize($form->getErrors(), 'json');
+
         return new JsonResponse($resultat, 403, [], true);
-        //return$this->handleView($this->view($form->getErrors()));
-//        $form->handleRequest($request);
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $this->em->persist($cat);
-//            $this->em->flush();
-//            $this->addFlash('success', 'flash.create.cat.success');
-//
-//            return $this->redirectToRoute('cats_list');
-//        }
-//
-//        return $this->render('cats/create.html.twig', [
-//            'form' => $form->createView(),
-//        ]);
     }
 
-    //create - post
+    /**
+     * @Route("/cat/{id}", name="cat_edit", methods={"PUT"})
+     */
+    public function editCat(Cat $cat, Request $request)
+    {
+        $form = $this->createForm(ApiCatType::class, $cat);
+        $data = json_decode($request->getContent(), true);
+        $form->submit($data);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($cat);
+            $em->flush();
 
-    //edit - put
+            $data = [
+                'message' => 'Chat modifié',
+            ];
+            $resultat = $this->serializer->serialize($data, 'json');
+
+            return new JsonResponse($resultat, 200, [], true);
+        }
+        $resultat = $this->serializer->serialize($form->getErrors(), 'json');
+
+        return new JsonResponse($resultat, 403, [], true);
+    }
 }
