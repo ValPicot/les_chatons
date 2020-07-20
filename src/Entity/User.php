@@ -34,9 +34,13 @@ class User implements UserInterface, \Serializable
     private $id;
 
     /**
-     * @Assert\NotBlank(groups={"registration"})
+     * @Assert\NotBlank()
      * @Assert\Length(minMessage="Min 3 caractères", maxMessage="Max 255 caractères", min="3", max="255")
-     * @ORM\Column(type="string", length=255)
+     */
+    private $plainPassword;
+
+    /**
+     * @ORM\Column(type="string")
      * @Groups({"get_cat"})
      */
     private $password;
@@ -108,12 +112,24 @@ class User implements UserInterface, \Serializable
         return (string) $this->email;
     }
 
-    public function getPassword(): ?string
+    public function getPlainPassword(): ?string
     {
-        return $this->password;
+        return $this->plainPassword;
     }
 
-    public function setPassword(?string $password): self
+    public function setPlainPassword(string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
+    public function getPassword(): string
+    {
+        return (string) $this->password;
+    }
+
+    public function setPassword(string $password): self
     {
         $this->password = $password;
 

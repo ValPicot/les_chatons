@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\Handler\UserEditHandler;
 use App\Form\Type\ProfileType;
 use App\Form\Type\UserType;
 use App\Repository\UserRepository;
@@ -87,15 +88,13 @@ class UsersController extends AbstractController
     /**
      * @Route("/edit", name="edit")
      */
-    public function edit(Request $request)
+    public function edit(Request $request, UserEditHandler $userEditHandler)
     {
         $user = $this->getUser();
 
-        $form = $this->createForm(ProfileType::class, $user);
-        $form->handleRequest($request);
+        $form = $this->createForm(ProfileType::class, $user, ['validation_groups' => ['user_edit']]);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->em->flush();
+        if ($userEditHandler->process($form, $request)) {
             $this->addFlash('success', 'flash.edit.user.success');
 
             return $this->redirectToRoute('users_profile');

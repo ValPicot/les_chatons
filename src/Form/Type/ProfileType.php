@@ -19,17 +19,14 @@ class ProfileType extends AbstractType
             ->add('name', TextType::class)
             ->add('lastname', TextType::class)
             ->add('email', EmailType::class)
-//            ->add('oldPassword', PasswordType::class, [
-//                'required' => false,
-//            ])
-//            ->add('newPassword', RepeatedType::class, [
-//                'type' => PasswordType::class,
-//                'required' => false,
-//                'mapped' => false,
-//                'first_options' => ['label' => 'form.profile.password.first'],
-//                'second_options' => ['label' => 'form.profile.password.second'],
-//                'invalid_message' => 'form.error.password.repeated',
-//            ])
+            ->add('plainPassword', RepeatedType::class, [
+                'first_options' => ['label' => 'form.profile.password.first'],
+                'second_options' => ['label' => 'form.profile.password.second'],
+                'type' => PasswordType::class,
+                'invalid_message' => 'form.error.password.repeated',
+                'mapped' => true,
+                'required' => !in_array('user_edit', $options['validation_groups']),
+            ])
         ;
     }
 
@@ -37,8 +34,6 @@ class ProfileType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
-            //'validation_groups' => ['Default', 'user_edit'],
-            'validation_groups' => ['Default'],
         ]);
     }
 }
