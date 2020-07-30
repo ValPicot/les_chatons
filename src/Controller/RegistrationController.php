@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\Handler\UserCreateHandler;
 use App\Form\Type\RegistrationType;
+use App\Form\Type\UserType;
 use App\Repository\UserRepository;
 use App\Service\MailerService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -30,27 +32,16 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/registration", name="registration")
      */
-    public function registration(Request $request)
+    public function registration(Request $request, UserCreateHandler $userCreateHandler)
     {
         if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
             return $this->redirectToRoute('cats_list');
         }
 
         $user = new User();
-        $form = $this->createForm(RegistrationType::class, $user);
-        $form->handleRequest($request);
+        $form = $this->createForm(UserType::class, $user, ['validation_groups' => ['Default', 'user_create']]);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $user = $form->getData();
-            $random = md5(random_bytes(60));
-            $user->setIsActive(0);
-            $user->setCreatedAt(new \DateTime('now'));
-            $user->setUpdatedAt(new \DateTime('now'));
-            $user->setPassword($this->encoder->encodePassword($user, $user->getPassword()));
-            $user->setResetToken($random);
-            $this->em->persist($user);
-            $this->em->flush();
-
+        if ($userCreateHandler->process($form, $request)) {
             $bodyMail = $this->renderView('emails/activeAccount.html.twig', ['user' => $user]);
             $this->mailerService->sendMail($bodyMail, 'noreply@leschatons.fr', $user->getEmail(), 'Confirmation d\'email');
 

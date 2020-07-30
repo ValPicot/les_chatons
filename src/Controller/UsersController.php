@@ -63,15 +63,13 @@ class UsersController extends AbstractController
     public function create(Request $request): Response
     {
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserType::class, $user, ['validation_groups' => ['Default', 'admin_user_create']]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $random = md5(random_bytes(60));
-            $user->setCreatedAt(new \DateTime('now'));
-            $user->setUpdatedAt(new \DateTime('now'));
-            $user->setPassword($this->encoder->encodePassword($user, $data->getPassword()));
+            $user->setPassword($this->encoder->encodePassword($user, $user->getPlainPassword()));
             $user->setResetToken($random);
             $this->em->persist($user);
             $this->em->flush();
@@ -92,7 +90,7 @@ class UsersController extends AbstractController
     {
         $user = $this->getUser();
 
-        $form = $this->createForm(ProfileType::class, $user, ['validation_groups' => ['user_edit']]);
+        $form = $this->createForm(UserType::class, $user, ['validation_groups' => ['Default', 'user_edit']]);
 
         if ($userEditHandler->process($form, $request)) {
             $this->addFlash('success', 'flash.edit.user.success');

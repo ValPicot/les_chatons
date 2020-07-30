@@ -28,7 +28,7 @@ class Cat
     private $id;
 
     /**
-     * @Assert\NotBlank(message="Test")
+     * @Assert\NotBlank()
      * @Assert\Length(minMessage="Min 3 caractères", maxMessage="Max 255 caractères", min="3", max="255")
      * @ORM\Column(type="string", length=255)
      * @Groups({"list_cats", "get_cat"})

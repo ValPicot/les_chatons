@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,12 +18,16 @@ class RegistrationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('lastname')
+            ->add('name', TextType::class)
+            ->add('lastname', TextType::class)
             ->add('email', EmailType::class)
-            ->add('password', RepeatedType::class, [
+            ->add('plainPassword', RepeatedType::class, [
+                'first_options' => ['label' => 'form.profile.password.first'],
+                'second_options' => ['label' => 'form.profile.password.second'],
                 'type' => PasswordType::class,
                 'invalid_message' => 'form.error.password.repeated',
+                'mapped' => true,
+                'required' => !in_array('user_edit', $options['validation_groups']),
             ])
         ;
     }
