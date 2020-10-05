@@ -1,5 +1,7 @@
 @import "~font-awesome/css/font-awesome.min.css";
 
+@import "darktheme";
+
 header {
   nav .right-users {
     .nav-item:not(:last-child) {
@@ -12,4 +14,8 @@ header {
       display: inline-block;
     }
   }
+}
+
+.dark-mode {
+
 }

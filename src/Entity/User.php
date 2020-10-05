@@ -96,6 +96,11 @@ class User implements UserInterface, \Serializable
      */
     private $apiToken;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $dark_mode;
+
     public function __construct()
     {
         $this->cats = new ArrayCollection();
@@ -332,6 +337,18 @@ class User implements UserInterface, \Serializable
     public function setApiToken($apiToken)
     {
         $this->apiToken = $apiToken;
+
+        return $this;
+    }
+
+    public function getDarkMode(): ?bool
+    {
+        return $this->dark_mode;
+    }
+
+    public function setDarkMode(?bool $dark_mode): self
+    {
+        $this->dark_mode = $dark_mode;
 
         return $this;
     }

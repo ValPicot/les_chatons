@@ -23,6 +23,7 @@ class UserType extends AbstractType
             ->add('name', TextType::class)
             ->add('lastname', TextType::class)
             ->add('email', EmailType::class)
+            ->add('darkMode', CheckboxType::class)
             ->add('plainPassword', RepeatedType::class, [
                 'first_options' => ['label' => 'form.profile.password.first'],
                 'second_options' => ['label' => 'form.profile.password.second'],
@@ -48,7 +49,7 @@ class UserType extends AbstractType
                 ->add('isActive', CheckboxType::class)
                 ->add('createdAt', HiddenType::class)
                 ->add('updatedAt', HiddenType::class)
-                ;
+            ;
         }
     }
 
